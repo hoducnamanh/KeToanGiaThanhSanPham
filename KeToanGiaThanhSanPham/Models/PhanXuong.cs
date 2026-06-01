@@ -13,7 +13,7 @@ namespace KeToanGiaThanhSanPham.Models
         public string MaPhanXuong { get; set; }
 
         [Required(ErrorMessage = "Không được để trống tên phân xưởng")]
-        [Display(Name = "Mã PX")]
+        [Display(Name = "Tên PX")]
         public string TenPhanXuong { get; set; }
         public ICollection<SanPham> SanPhamCollection { get; set; }
     }
