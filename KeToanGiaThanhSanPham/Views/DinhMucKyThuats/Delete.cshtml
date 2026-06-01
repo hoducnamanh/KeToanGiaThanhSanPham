@@ -1,0 +1,58 @@
+@model KeToanGiaThanhSanPham.Models.DinhMucKyThuat
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>KeToanGiaThanhSanPham.Models.DinhMucKyThuat</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SanPhamId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SanPhamId)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SanPham)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SanPham)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NguyenVatLieuId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NguyenVatLieuId)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NguyenVatLieu)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NguyenVatLieu)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SoLuongDinhMuc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SoLuongDinhMuc)
+        </dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="DinhMucKyThuatId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

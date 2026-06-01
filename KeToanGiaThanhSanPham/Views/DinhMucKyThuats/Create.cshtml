@@ -1,0 +1,54 @@
+@model KeToanGiaThanhSanPham.Models.DinhMucKyThuat
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>DinhMucKyThuat</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="SanPhamId" class="control-label"></label>
+                <input asp-for="SanPhamId" class="form-control" />
+                <span asp-validation-for="SanPhamId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SanPham" class="control-label"></label>
+                <input asp-for="SanPham" class="form-control" />
+                <span asp-validation-for="SanPham" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NguyenVatLieuId" class="control-label"></label>
+                <input asp-for="NguyenVatLieuId" class="form-control" />
+                <span asp-validation-for="NguyenVatLieuId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NguyenVatLieu" class="control-label"></label>
+                <input asp-for="NguyenVatLieu" class="form-control" />
+                <span asp-validation-for="NguyenVatLieu" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SoLuongDinhMuc" class="control-label"></label>
+                <input asp-for="SoLuongDinhMuc" class="form-control" />
+                <span asp-validation-for="SoLuongDinhMuc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
