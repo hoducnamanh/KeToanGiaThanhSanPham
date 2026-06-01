@@ -6,7 +6,7 @@ namespace KeToanGiaThanhSanPham.Models
     public class SanPham
     {
         [Key]
-        public int SanPhamId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage ="Không được để trống mã sản phẩm")]
         [Display(Name ="Mã SP")]
@@ -22,8 +22,13 @@ namespace KeToanGiaThanhSanPham.Models
 
         [Display(Name = "Phân xưởng")]
         public int PhanXuongId { get; set; }
-        public PhanXuong PhanXuong { get; set; }
-        public ICollection<DinhMucKyThuat> DinhMucKyThuatCollection { get; set; }
+        public PhanXuong PhanXuong { get; set; } = new PhanXuong();
+        public ICollection<DinhMucKyThuat> DinhMucKyThuatCollection { get; set; } = new List<DinhMucKyThuat>();
+
+        public SanPham()
+        {
+            
+        }
 
     }
 }

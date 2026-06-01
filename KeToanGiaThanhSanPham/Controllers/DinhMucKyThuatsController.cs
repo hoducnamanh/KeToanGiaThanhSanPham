@@ -20,15 +20,15 @@ public class DinhMucKyThuatsController : Controller
     }
 
     // GET: DINHMUCKYTHUATS/Details/5
-    public async Task<IActionResult> Details(int? dinhmuckythuatid)
+    public async Task<IActionResult> Details(int? id)
     {
-        if (dinhmuckythuatid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var dinhmuckythuat = await _context.DinhMucKyThuat
-            .FirstOrDefaultAsync(m => m.DinhMucKyThuatId == dinhmuckythuatid);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (dinhmuckythuat == null)
         {
             return NotFound();
@@ -48,7 +48,7 @@ public class DinhMucKyThuatsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("DinhMucKyThuatId,SanPhamId,SanPham,NguyenVatLieuId,NguyenVatLieu,SoLuongDinhMuc")] DinhMucKyThuat dinhmuckythuat)
+    public async Task<IActionResult> Create([Bind("Id,SanPhamId,SanPham,NguyenVatLieuId,NguyenVatLieu,SoLuongDinhMuc")] DinhMucKyThuat dinhmuckythuat)
     {
         if (ModelState.IsValid)
         {
@@ -60,14 +60,14 @@ public class DinhMucKyThuatsController : Controller
     }
 
     // GET: DINHMUCKYTHUATS/Edit/5
-    public async Task<IActionResult> Edit(int? dinhmuckythuatid)
+    public async Task<IActionResult> Edit(int? id)
     {
-        if (dinhmuckythuatid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
-        var dinhmuckythuat = await _context.DinhMucKyThuat.FindAsync(dinhmuckythuatid);
+        var dinhmuckythuat = await _context.DinhMucKyThuat.FindAsync(id);
         if (dinhmuckythuat == null)
         {
             return NotFound();
@@ -80,9 +80,9 @@ public class DinhMucKyThuatsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? dinhmuckythuatid, [Bind("DinhMucKyThuatId,SanPhamId,SanPham,NguyenVatLieuId,NguyenVatLieu,SoLuongDinhMuc")] DinhMucKyThuat dinhmuckythuat)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,SanPhamId,SanPham,NguyenVatLieuId,NguyenVatLieu,SoLuongDinhMuc")] DinhMucKyThuat dinhmuckythuat)
     {
-        if (dinhmuckythuatid != dinhmuckythuat.DinhMucKyThuatId)
+        if (id != dinhmuckythuat.Id)
         {
             return NotFound();
         }
@@ -96,7 +96,7 @@ public class DinhMucKyThuatsController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DinhMucKyThuatExists(dinhmuckythuat.DinhMucKyThuatId))
+                if (!DinhMucKyThuatExists(dinhmuckythuat.Id))
                 {
                     return NotFound();
                 }
@@ -111,15 +111,15 @@ public class DinhMucKyThuatsController : Controller
     }
 
     // GET: DINHMUCKYTHUATS/Delete/5
-    public async Task<IActionResult> Delete(int? dinhmuckythuatid)
+    public async Task<IActionResult> Delete(int? id)
     {
-        if (dinhmuckythuatid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var dinhmuckythuat = await _context.DinhMucKyThuat
-            .FirstOrDefaultAsync(m => m.DinhMucKyThuatId == dinhmuckythuatid);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (dinhmuckythuat == null)
         {
             return NotFound();
@@ -131,9 +131,9 @@ public class DinhMucKyThuatsController : Controller
     // POST: DINHMUCKYTHUATS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? dinhmuckythuatid)
+    public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var dinhmuckythuat = await _context.DinhMucKyThuat.FindAsync(dinhmuckythuatid);
+        var dinhmuckythuat = await _context.DinhMucKyThuat.FindAsync(id);
         if (dinhmuckythuat != null)
         {
             _context.DinhMucKyThuat.Remove(dinhmuckythuat);
@@ -143,8 +143,8 @@ public class DinhMucKyThuatsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool DinhMucKyThuatExists(int? dinhmuckythuatid)
+    private bool DinhMucKyThuatExists(int? id)
     {
-        return _context.DinhMucKyThuat.Any(e => e.DinhMucKyThuatId == dinhmuckythuatid);
+        return _context.DinhMucKyThuat.Any(e => e.Id == id);
     }
 }

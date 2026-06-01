@@ -20,15 +20,15 @@ public class SanPhamsController : Controller
     }
 
     // GET: SANPHAMS/Details/5
-    public async Task<IActionResult> Details(int? sanphamid)
+    public async Task<IActionResult> Details(int? id)
     {
-        if (sanphamid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var sanpham = await _context.SanPham
-            .FirstOrDefaultAsync(m => m.SanPhamId == sanphamid);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (sanpham == null)
         {
             return NotFound();
@@ -48,7 +48,7 @@ public class SanPhamsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("SanPhamId,MaSanPham,TenSanPham,DonViTinh,PhanXuongId,PhanXuong,DinhMucKyThuatCollection")] SanPham sanpham)
+    public async Task<IActionResult> Create([Bind("Id,MaSanPham,TenSanPham,DonViTinh,PhanXuongId,PhanXuong,DinhMucKyThuatCollection")] SanPham sanpham)
     {
         if (ModelState.IsValid)
         {
@@ -60,14 +60,14 @@ public class SanPhamsController : Controller
     }
 
     // GET: SANPHAMS/Edit/5
-    public async Task<IActionResult> Edit(int? sanphamid)
+    public async Task<IActionResult> Edit(int? id)
     {
-        if (sanphamid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
-        var sanpham = await _context.SanPham.FindAsync(sanphamid);
+        var sanpham = await _context.SanPham.FindAsync(id);
         if (sanpham == null)
         {
             return NotFound();
@@ -80,9 +80,9 @@ public class SanPhamsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? sanphamid, [Bind("SanPhamId,MaSanPham,TenSanPham,DonViTinh,PhanXuongId,PhanXuong,DinhMucKyThuatCollection")] SanPham sanpham)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,MaSanPham,TenSanPham,DonViTinh,PhanXuongId,PhanXuong,DinhMucKyThuatCollection")] SanPham sanpham)
     {
-        if (sanphamid != sanpham.SanPhamId)
+        if (id != sanpham.Id)
         {
             return NotFound();
         }
@@ -96,7 +96,7 @@ public class SanPhamsController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SanPhamExists(sanpham.SanPhamId))
+                if (!SanPhamExists(sanpham.Id))
                 {
                     return NotFound();
                 }
@@ -111,15 +111,15 @@ public class SanPhamsController : Controller
     }
 
     // GET: SANPHAMS/Delete/5
-    public async Task<IActionResult> Delete(int? sanphamid)
+    public async Task<IActionResult> Delete(int? id)
     {
-        if (sanphamid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var sanpham = await _context.SanPham
-            .FirstOrDefaultAsync(m => m.SanPhamId == sanphamid);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (sanpham == null)
         {
             return NotFound();
@@ -131,9 +131,9 @@ public class SanPhamsController : Controller
     // POST: SANPHAMS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? sanphamid)
+    public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var sanpham = await _context.SanPham.FindAsync(sanphamid);
+        var sanpham = await _context.SanPham.FindAsync(id);
         if (sanpham != null)
         {
             _context.SanPham.Remove(sanpham);
@@ -143,8 +143,8 @@ public class SanPhamsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool SanPhamExists(int? sanphamid)
+    private bool SanPhamExists(int? id)
     {
-        return _context.SanPham.Any(e => e.SanPhamId == sanphamid);
+        return _context.SanPham.Any(e => e.Id == id);
     }
 }

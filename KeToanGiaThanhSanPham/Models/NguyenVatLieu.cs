@@ -6,7 +6,7 @@ namespace KeToanGiaThanhSanPham.Models
     public class NguyenVatLieu
     {
         [Key]
-        public int NguyenVatLieuId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Không được để trống mã nguyên vật liệu")]
         [Display(Name = "Mã NVL")]
@@ -23,5 +23,10 @@ namespace KeToanGiaThanhSanPham.Models
         [Required(ErrorMessage = "Không được để trống đơn giá NVL")]
         [Display(Name = "Đơn giá NVL")]
         public decimal DonGia { get; set; }
+
+        public NguyenVatLieu()
+        {
+            
+        }
     }
 }

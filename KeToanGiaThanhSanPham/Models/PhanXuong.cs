@@ -6,7 +6,7 @@ namespace KeToanGiaThanhSanPham.Models
     public class PhanXuong
     {
         [Key]
-        public int PhanXuongId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Không được để trống mã phân xưởng")]
         [Display(Name = "Mã PX")]
@@ -15,6 +15,12 @@ namespace KeToanGiaThanhSanPham.Models
         [Required(ErrorMessage = "Không được để trống tên phân xưởng")]
         [Display(Name = "Tên PX")]
         public string TenPhanXuong { get; set; }
-        public ICollection<SanPham> SanPhamCollection { get; set; }
+        [Display(Name ="Danh mục sản phẩm")]
+        public ICollection<SanPham> SanPhamCollection { get; set; } = new List<SanPham>();
+
+        public PhanXuong()
+        {
+            
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace KeToanGiaThanhSanPham.Models
     public class DinhMucKyThuat
     {
         [Key]
-        public int DinhMucKyThuatId { get; set; }
+        public int Id { get; set; }
  
         [Display(Name = "SP")]
         public int SanPhamId { get; set; }
@@ -19,5 +19,10 @@ namespace KeToanGiaThanhSanPham.Models
         [Required(ErrorMessage = "Không được để trống số lượng định mức")]
         [Display(Name = "SL định mức")]
         public decimal SoLuongDinhMuc { get; set; }
+
+        public DinhMucKyThuat()
+        {
+            
+        }
     }
 }

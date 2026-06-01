@@ -20,15 +20,15 @@ public class NguyenVatLieusController : Controller
     }
 
     // GET: NGUYENVATLIEUS/Details/5
-    public async Task<IActionResult> Details(int? nguyenvatlieuid)
+    public async Task<IActionResult> Details(int? id)
     {
-        if (nguyenvatlieuid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var nguyenvatlieu = await _context.NguyenVatLieu
-            .FirstOrDefaultAsync(m => m.NguyenVatLieuId == nguyenvatlieuid);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (nguyenvatlieu == null)
         {
             return NotFound();
@@ -48,7 +48,7 @@ public class NguyenVatLieusController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("NguyenVatLieuId,MaNguyenVatLieu,TenNguyenVatLieu,DonViTinh,DonGia")] NguyenVatLieu nguyenvatlieu)
+    public async Task<IActionResult> Create([Bind("Id,MaNguyenVatLieu,TenNguyenVatLieu,DonViTinh,DonGia")] NguyenVatLieu nguyenvatlieu)
     {
         if (ModelState.IsValid)
         {
@@ -60,14 +60,14 @@ public class NguyenVatLieusController : Controller
     }
 
     // GET: NGUYENVATLIEUS/Edit/5
-    public async Task<IActionResult> Edit(int? nguyenvatlieuid)
+    public async Task<IActionResult> Edit(int? id)
     {
-        if (nguyenvatlieuid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
-        var nguyenvatlieu = await _context.NguyenVatLieu.FindAsync(nguyenvatlieuid);
+        var nguyenvatlieu = await _context.NguyenVatLieu.FindAsync(id);
         if (nguyenvatlieu == null)
         {
             return NotFound();
@@ -80,9 +80,9 @@ public class NguyenVatLieusController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? nguyenvatlieuid, [Bind("NguyenVatLieuId,MaNguyenVatLieu,TenNguyenVatLieu,DonViTinh,DonGia")] NguyenVatLieu nguyenvatlieu)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,MaNguyenVatLieu,TenNguyenVatLieu,DonViTinh,DonGia")] NguyenVatLieu nguyenvatlieu)
     {
-        if (nguyenvatlieuid != nguyenvatlieu.NguyenVatLieuId)
+        if (id != nguyenvatlieu.Id)
         {
             return NotFound();
         }
@@ -96,7 +96,7 @@ public class NguyenVatLieusController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!NguyenVatLieuExists(nguyenvatlieu.NguyenVatLieuId))
+                if (!NguyenVatLieuExists(nguyenvatlieu.Id))
                 {
                     return NotFound();
                 }
@@ -111,15 +111,15 @@ public class NguyenVatLieusController : Controller
     }
 
     // GET: NGUYENVATLIEUS/Delete/5
-    public async Task<IActionResult> Delete(int? nguyenvatlieuid)
+    public async Task<IActionResult> Delete(int? id)
     {
-        if (nguyenvatlieuid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var nguyenvatlieu = await _context.NguyenVatLieu
-            .FirstOrDefaultAsync(m => m.NguyenVatLieuId == nguyenvatlieuid);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (nguyenvatlieu == null)
         {
             return NotFound();
@@ -131,9 +131,9 @@ public class NguyenVatLieusController : Controller
     // POST: NGUYENVATLIEUS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? nguyenvatlieuid)
+    public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var nguyenvatlieu = await _context.NguyenVatLieu.FindAsync(nguyenvatlieuid);
+        var nguyenvatlieu = await _context.NguyenVatLieu.FindAsync(id);
         if (nguyenvatlieu != null)
         {
             _context.NguyenVatLieu.Remove(nguyenvatlieu);
@@ -143,8 +143,8 @@ public class NguyenVatLieusController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool NguyenVatLieuExists(int? nguyenvatlieuid)
+    private bool NguyenVatLieuExists(int? id)
     {
-        return _context.NguyenVatLieu.Any(e => e.NguyenVatLieuId == nguyenvatlieuid);
+        return _context.NguyenVatLieu.Any(e => e.Id == id);
     }
 }

@@ -20,15 +20,15 @@ public class PhanXuongsController : Controller
     }
 
     // GET: PHANXUONGS/Details/5
-    public async Task<IActionResult> Details(int? phanxuongid)
+    public async Task<IActionResult> Details(int? id)
     {
-        if (phanxuongid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var phanxuong = await _context.PhanXuong
-            .FirstOrDefaultAsync(m => m.PhanXuongId == phanxuongid);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (phanxuong == null)
         {
             return NotFound();
@@ -48,7 +48,7 @@ public class PhanXuongsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("PhanXuongId,MaPhanXuong,TenPhanXuong,SanPhamCollection")] PhanXuong phanxuong)
+    public async Task<IActionResult> Create([Bind("Id,MaPhanXuong,TenPhanXuong,SanPhamCollection")] PhanXuong phanxuong)
     {
         if (ModelState.IsValid)
         {
@@ -60,14 +60,14 @@ public class PhanXuongsController : Controller
     }
 
     // GET: PHANXUONGS/Edit/5
-    public async Task<IActionResult> Edit(int? phanxuongid)
+    public async Task<IActionResult> Edit(int? id)
     {
-        if (phanxuongid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
-        var phanxuong = await _context.PhanXuong.FindAsync(phanxuongid);
+        var phanxuong = await _context.PhanXuong.FindAsync(id);
         if (phanxuong == null)
         {
             return NotFound();
@@ -80,9 +80,9 @@ public class PhanXuongsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? phanxuongid, [Bind("PhanXuongId,MaPhanXuong,TenPhanXuong,SanPhamCollection")] PhanXuong phanxuong)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,MaPhanXuong,TenPhanXuong,SanPhamCollection")] PhanXuong phanxuong)
     {
-        if (phanxuongid != phanxuong.PhanXuongId)
+        if (id != phanxuong.Id)
         {
             return NotFound();
         }
@@ -96,7 +96,7 @@ public class PhanXuongsController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PhanXuongExists(phanxuong.PhanXuongId))
+                if (!PhanXuongExists(phanxuong.Id))
                 {
                     return NotFound();
                 }
@@ -111,15 +111,15 @@ public class PhanXuongsController : Controller
     }
 
     // GET: PHANXUONGS/Delete/5
-    public async Task<IActionResult> Delete(int? phanxuongid)
+    public async Task<IActionResult> Delete(int? id)
     {
-        if (phanxuongid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var phanxuong = await _context.PhanXuong
-            .FirstOrDefaultAsync(m => m.PhanXuongId == phanxuongid);
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (phanxuong == null)
         {
             return NotFound();
@@ -131,9 +131,9 @@ public class PhanXuongsController : Controller
     // POST: PHANXUONGS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? phanxuongid)
+    public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var phanxuong = await _context.PhanXuong.FindAsync(phanxuongid);
+        var phanxuong = await _context.PhanXuong.FindAsync(id);
         if (phanxuong != null)
         {
             _context.PhanXuong.Remove(phanxuong);
@@ -143,8 +143,8 @@ public class PhanXuongsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool PhanXuongExists(int? phanxuongid)
+    private bool PhanXuongExists(int? id)
     {
-        return _context.PhanXuong.Any(e => e.PhanXuongId == phanxuongid);
+        return _context.PhanXuong.Any(e => e.Id == id);
     }
 }
