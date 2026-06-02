@@ -1,4 +1,4 @@
-@model KeToanGiaThanhSanPham.Models.SanPham
+@model KeToanGiaThanhSanPham.Models.ViewModels.SanPhamEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -30,18 +30,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="PhanXuongId" class="control-label"></label>
-                <input asp-for="PhanXuongId" class="form-control" />
+                <select asp-for="PhanXuongId" class="form-control" asp-items="Model.PhanXuongList">
+                    <option value=""> Chọn phân xưởng </option>
+                </select>
                 <span asp-validation-for="PhanXuongId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhanXuong" class="control-label"></label>
-                <input asp-for="PhanXuong" class="form-control" />
-                <span asp-validation-for="PhanXuong" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DinhMucKyThuatCollection" class="control-label"></label>
-                <input asp-for="DinhMucKyThuatCollection" class="form-control" />
-                <span asp-validation-for="DinhMucKyThuatCollection" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

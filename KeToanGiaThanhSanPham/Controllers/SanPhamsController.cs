@@ -100,7 +100,23 @@ public class SanPhamsController : Controller
         {
             return NotFound();
         }
-        return View(sanpham);
+
+        var viewModel = new SanPhamEditViewModel
+        {
+            Id = sanpham.Id,
+            MaSanPham = sanpham.MaSanPham,
+            TenSanPham = sanpham.TenSanPham,
+            DonViTinh = sanpham.DonViTinh,
+            PhanXuongId = sanpham.PhanXuongId,
+
+            PhanXuongList = await _context.PhanXuong
+                .Select(px => new SelectListItem
+                {
+                    Value = px.Id.ToString(),
+                    Text = px.TenPhanXuong
+                }).ToListAsync()
+        };
+        return View(viewModel);
     }
 
     // POST: SANPHAMS/Edit/5
@@ -108,9 +124,9 @@ public class SanPhamsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,MaSanPham,TenSanPham,DonViTinh,PhanXuongId,PhanXuong,DinhMucKyThuatCollection")] SanPham sanpham)
+    public async Task<IActionResult> Edit(int? id, SanPhamEditViewModel viewModel)
     {
-        if (id != sanpham.Id)
+        if (id != viewModel.Id)
         {
             return NotFound();
         }
@@ -119,12 +135,20 @@ public class SanPhamsController : Controller
         {
             try
             {
-                _context.Update(sanpham);
+                var sanPham = await _context.SanPham.FindAsync(id);
+                if (sanPham == null) return NotFound();
+
+                sanPham.MaSanPham = viewModel.MaSanPham;
+                sanPham.TenSanPham = viewModel.TenSanPham;
+                sanPham.DonViTinh = viewModel.DonViTinh;
+                sanPham.PhanXuongId = viewModel.PhanXuongId;
+
+                _context.Update(sanPham);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SanPhamExists(sanpham.Id))
+                if (!SanPhamExists(viewModel.Id))
                 {
                     return NotFound();
                 }
@@ -135,7 +159,15 @@ public class SanPhamsController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(sanpham);
+
+        viewModel.PhanXuongList = await _context.PhanXuong
+            .Select(px => new SelectListItem
+            {
+                Value = px.Id.ToString(),
+                Text = px.TenPhanXuong
+            }).ToListAsync();
+
+        return View(viewModel);
     }
 
     // GET: SANPHAMS/Delete/5
