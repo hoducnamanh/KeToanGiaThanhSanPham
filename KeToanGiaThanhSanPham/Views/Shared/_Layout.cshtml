@@ -1,57 +1,106 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - KeToanGiaThanhSanPham</title>
+    <title>@ViewData["Title"] - Kế Toán Giá Thành</title>
     <script type="importmap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/KeToanGiaThanhSanPham.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">KeToanGiaThanhSanPham</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        <nav class="main-navbar">
+            <div class="container-fluid px-4">
+                <div class="navbar-inner">
+                    <a class="brand-link" asp-area="" asp-controller="Home" asp-action="Index">
+                        <div class="brand-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                        </div>
+                        <div class="brand-text">
+                            <span class="brand-name">KeToan</span><span class="brand-accent">GiaThanh</span>
+                        </div>
+                    </a>
+
+                    <ul class="nav-links d-none d-md-flex">
+                        <li>
+                            <a class="nav-link-item" asp-area="" asp-controller="Home" asp-action="Index">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                Trang chủ
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SanPhams" asp-action="Index">Sản phẩm</a>
+                        <li>
+                            <a class="nav-link-item" asp-area="" asp-controller="SanPhams" asp-action="Index">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                                Sản phẩm
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="NguyenVatLieus" asp-action="Index">NVL</a>
+                        <li>
+                            <a class="nav-link-item" asp-area="" asp-controller="NguyenVatLieus" asp-action="Index">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg>
+                                Nguyên vật liệu
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="PhanXuongs" asp-action="Index">Phân xưởng</a>
+                        <li>
+                            <a class="nav-link-item" asp-area="" asp-controller="PhanXuongs" asp-action="Index">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                Phân xưởng
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="DinhMucKyThuats" asp-action="Index">Định mức KT</a>
+                        <li>
+                            <a class="nav-link-item" asp-area="" asp-controller="DinhMucKyThuats" asp-action="Index">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                Định mức KT
+                            </a>
                         </li>
                     </ul>
-                    <partial name="_LoginPartial" />
+
+                    <div class="nav-right d-flex align-items-center gap-3">
+                        <partial name="_LoginPartial" />
+                        <button class="mobile-toggle d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="collapse" id="mobileMenu">
+                    <ul class="mobile-nav-links">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                        <li><a asp-area="" asp-controller="SanPhams" asp-action="Index">Sản phẩm</a></li>
+                        <li><a asp-area="" asp-controller="NguyenVatLieus" asp-action="Index">Nguyên vật liệu</a></li>
+                        <li><a asp-area="" asp-controller="PhanXuongs" asp-action="Index">Phân xưởng</a></li>
+                        <li><a asp-area="" asp-controller="DinhMucKyThuats" asp-action="Index">Định mức kỹ thuật</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <div class="page-wrapper">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="main-footer">
         <div class="container">
-            &copy; 2026 - KeToanGiaThanhSanPham - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <div class="brand-icon small">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                    </div>
+                    <span>KeToanGiaThanhSanPham</span>
+                </div>
+                <div class="footer-copy">&copy; 2026 — Hệ thống kế toán giá thành sản phẩm</div>
+                <a asp-area="" asp-controller="Home" asp-action="Privacy" class="footer-link">Chính sách bảo mật</a>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
