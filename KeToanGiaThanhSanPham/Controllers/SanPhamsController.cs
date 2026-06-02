@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KeToanGiaThanhSanPham.Models;
 using KeToanGiaThanhSanPham.Data;
+using KeToanGiaThanhSanPham.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class SanPhamsController : Controller
 {
@@ -38,7 +40,7 @@ public class SanPhamsController : Controller
     }
 
     // GET: SANPHAMS/Create
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
         return View();
     }

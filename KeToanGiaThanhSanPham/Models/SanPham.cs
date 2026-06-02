@@ -19,7 +19,8 @@ namespace KeToanGiaThanhSanPham.Models
         [Required(ErrorMessage = "Không được để trống đơn vị tính")]
         [Display(Name = "ĐVT")]
         public string DonViTinh { get; set; }
-
+        
+        [Required(ErrorMessage = "Không được để trống phân xưởng")]
         [Display(Name = "Phân xưởng")]
         public int PhanXuongId { get; set; }
         public PhanXuong PhanXuong { get; set; } = new PhanXuong();

@@ -20,8 +20,8 @@ namespace KeToanGiaThanhSanPham.Models
         [Display(Name = "ĐVT")]
         public string DonViTinh { get; set; }
 
-        [Required(ErrorMessage = "Không được để trống đơn giá NVL")]
-        [Display(Name = "Đơn giá NVL")]
+        [Required(ErrorMessage = "Không được để trống đơn giá")]
+        [Display(Name = "Đơn giá")]
         public decimal DonGia { get; set; }
 
         public NguyenVatLieu()
