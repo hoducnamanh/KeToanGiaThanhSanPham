@@ -18,7 +18,11 @@ public class SanPhamsController : Controller
     // GET: SANPHAMS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.SanPham.ToListAsync());
+        var SanPham = await _context.SanPham
+            .Include(sp => sp.PhanXuong)
+            .ToListAsync();
+
+        return View(SanPham);
     }
 
     // GET: SANPHAMS/Details/5
@@ -42,7 +46,15 @@ public class SanPhamsController : Controller
     // GET: SANPHAMS/Create
     public async Task<IActionResult> Create()
     {
-        return View();
+        var viewModel = new SanPhamCreateViewModel
+        {   
+            PhanXuongList = await _context.PhanXuong.Select(px => new SelectListItem
+            {
+                Value = px.Id.ToString(),
+                Text = px.TenPhanXuong
+            }).ToListAsync()
+        };
+        return View(viewModel);
     }
 
     // POST: SANPHAMS/Create
@@ -50,15 +62,29 @@ public class SanPhamsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,MaSanPham,TenSanPham,DonViTinh,PhanXuongId,PhanXuong,DinhMucKyThuatCollection")] SanPham sanpham)
+    public async Task<IActionResult> Create(SanPhamCreateViewModel viewModel)
     {
         if (ModelState.IsValid)
         {
+            var sanpham = new SanPham
+            {
+                MaSanPham = viewModel.MaSanPham,
+                TenSanPham = viewModel.TenSanPham,
+                DonViTinh = viewModel.DonViTinh,
+                PhanXuongId = viewModel.PhanXuongId
+            };
             _context.Add(sanpham);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+
+            viewModel.PhanXuongList = await _context.PhanXuong
+                .Select(px => new SelectListItem
+                {
+                    Value = px.Id.ToString(),
+                    Text = px.TenPhanXuong
+                }).ToListAsync();
         }
-        return View(sanpham);
+        return View(viewModel);
     }
 
     // GET: SANPHAMS/Edit/5

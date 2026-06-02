@@ -23,7 +23,7 @@ namespace KeToanGiaThanhSanPham.Models
         [Required(ErrorMessage = "Không được để trống phân xưởng")]
         [Display(Name = "Phân xưởng")]
         public int PhanXuongId { get; set; }
-        public PhanXuong PhanXuong { get; set; } = new PhanXuong();
+        public PhanXuong PhanXuong { get; set; }
         public ICollection<DinhMucKyThuat> DinhMucKyThuatCollection { get; set; } = new List<DinhMucKyThuat>();
 
         public SanPham()
