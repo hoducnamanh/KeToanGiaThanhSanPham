@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KeToanGiaThanhSanPham.Models;
 using KeToanGiaThanhSanPham.Data;
-using KeToanGiaThanhSanPham.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using KeToanGiaThanhSanPham.Models.ViewModels.SanPham;
 
 public class SanPhamsController : Controller
 {
