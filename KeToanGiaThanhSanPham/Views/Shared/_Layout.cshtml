@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
@@ -33,29 +33,52 @@
                                 Trang chủ
                             </a>
                         </li>
-                        <li>
-                            <a class="nav-link-item" asp-area="" asp-controller="SanPhams" asp-action="Index">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-                                Sản phẩm
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link-item" asp-area="" asp-controller="NguyenVatLieus" asp-action="Index">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg>
-                                Nguyên vật liệu
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link-item" asp-area="" asp-controller="PhanXuongs" asp-action="Index">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                                Phân xưởng
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-link-item" asp-area="" asp-controller="DinhMucKyThuats" asp-action="Index">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                                Định mức KT
-                            </a>
+                        <li class="nav-dropdown-wrapper">
+                            <button class="nav-link-item nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+                                Danh mục
+                                <svg class="dropdown-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="nav-dropdown-menu">
+                                <div class="nav-dropdown-inner">
+                                    <a class="nav-dropdown-item" asp-area="" asp-controller="SanPhams" asp-action="Index">
+                                        <div class="nav-dropdown-icon module-blue">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                                        </div>
+                                        <div class="nav-dropdown-text">
+                                            <span class="nav-dropdown-label">Sản phẩm</span>
+                                            <span class="nav-dropdown-desc">Quản lý danh mục sản phẩm</span>
+                                        </div>
+                                    </a>
+                                    <a class="nav-dropdown-item" asp-area="" asp-controller="NguyenVatLieus" asp-action="Index">
+                                        <div class="nav-dropdown-icon module-amber">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg>
+                                        </div>
+                                        <div class="nav-dropdown-text">
+                                            <span class="nav-dropdown-label">Nguyên vật liệu</span>
+                                            <span class="nav-dropdown-desc">Theo dõi nguyên liệu đầu vào</span>
+                                        </div>
+                                    </a>
+                                    <a class="nav-dropdown-item" asp-area="" asp-controller="PhanXuongs" asp-action="Index">
+                                        <div class="nav-dropdown-icon module-teal">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                        </div>
+                                        <div class="nav-dropdown-text">
+                                            <span class="nav-dropdown-label">Phân xưởng</span>
+                                            <span class="nav-dropdown-desc">Quản lý phân xưởng sản xuất</span>
+                                        </div>
+                                    </a>
+                                    <a class="nav-dropdown-item" asp-area="" asp-controller="DinhMucKyThuats" asp-action="Index">
+                                        <div class="nav-dropdown-icon module-violet">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                                        </div>
+                                        <div class="nav-dropdown-text">
+                                            <span class="nav-dropdown-label">Định mức kỹ thuật</span>
+                                            <span class="nav-dropdown-desc">Thiết lập định mức sản xuất</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </li>
                     </ul>
 
@@ -70,10 +93,19 @@
                 <div class="collapse" id="mobileMenu">
                     <ul class="mobile-nav-links">
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a></li>
-                        <li><a asp-area="" asp-controller="SanPhams" asp-action="Index">Sản phẩm</a></li>
-                        <li><a asp-area="" asp-controller="NguyenVatLieus" asp-action="Index">Nguyên vật liệu</a></li>
-                        <li><a asp-area="" asp-controller="PhanXuongs" asp-action="Index">Phân xưởng</a></li>
-                        <li><a asp-area="" asp-controller="DinhMucKyThuats" asp-action="Index">Định mức kỹ thuật</a></li>
+                        <li class="mobile-dropdown-group">
+                            <button class="mobile-dropdown-toggle" type="button">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+                                Danh mục
+                                <svg class="mobile-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <ul class="mobile-sub-links">
+                                <li><a asp-area="" asp-controller="SanPhams" asp-action="Index">Sản phẩm</a></li>
+                                <li><a asp-area="" asp-controller="NguyenVatLieus" asp-action="Index">Nguyên vật liệu</a></li>
+                                <li><a asp-area="" asp-controller="PhanXuongs" asp-action="Index">Phân xưởng</a></li>
+                                <li><a asp-area="" asp-controller="DinhMucKyThuats" asp-action="Index">Định mức kỹ thuật</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
