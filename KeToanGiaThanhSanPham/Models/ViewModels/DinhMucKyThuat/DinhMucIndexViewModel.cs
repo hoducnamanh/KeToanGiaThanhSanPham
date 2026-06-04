@@ -10,6 +10,8 @@ namespace KeToanGiaThanhSanPham.Models.ViewModels.DinhMucKyThuat
         public string TenSanPham { get; set; }
 
         public List<DinhMucChiTietViewModel> DinhMucKyThuatList { get; set; }
+
+        public DinhMucCreateViewModel NguyenVatLieuInput { get; set; }
     }
     public class DinhMucChiTietViewModel
     {

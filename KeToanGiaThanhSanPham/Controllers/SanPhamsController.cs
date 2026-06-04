@@ -48,6 +48,7 @@ public class SanPhamsController : Controller
     {
         var viewModel = new SanPhamCreateViewModel
         {   
+            //Lấy danh sách phân xưởng từ DB để nạp vào Dropdown
             PhanXuongList = await _context.PhanXuong.Select(px => new SelectListItem
             {
                 Value = px.Id.ToString(),
@@ -68,6 +69,7 @@ public class SanPhamsController : Controller
         {
             var sanpham = new SanPham
             {
+                //Map data từ ViewModel -> EntityModel
                 MaSanPham = viewModel.MaSanPham,
                 TenSanPham = viewModel.TenSanPham,
                 DonViTinh = viewModel.DonViTinh,
@@ -75,8 +77,9 @@ public class SanPhamsController : Controller
             };
             _context.Add(sanpham);
             await _context.SaveChangesAsync();
+            //Quay về Index
             return RedirectToAction(nameof(Index));
-
+            //Nạp lại danh sách phân xưởng nếu data invalid
             viewModel.PhanXuongList = await _context.PhanXuong
                 .Select(px => new SelectListItem
                 {
@@ -94,13 +97,14 @@ public class SanPhamsController : Controller
         {
             return NotFound();
         }
-
+        //Tìm sản phẩm trong DB theo id
         var sanpham = await _context.SanPham.FindAsync(id);
         if (sanpham == null)
         {
             return NotFound();
         }
 
+        //Map data từ EntityModel -> ViewModel
         var viewModel = new SanPhamEditViewModel
         {
             Id = sanpham.Id,
@@ -108,7 +112,7 @@ public class SanPhamsController : Controller
             TenSanPham = sanpham.TenSanPham,
             DonViTinh = sanpham.DonViTinh,
             PhanXuongId = sanpham.PhanXuongId,
-
+            //Nạp danh sách phân xưởng để đổi phân xưởng
             PhanXuongList = await _context.PhanXuong
                 .Select(px => new SelectListItem
                 {
@@ -126,40 +130,33 @@ public class SanPhamsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int? id, SanPhamEditViewModel viewModel)
     {
-        if (id != viewModel.Id)
-        {
-            return NotFound();
-        }
+        if (id != viewModel.Id) return NotFound();
 
         if (ModelState.IsValid)
         {
             try
             {
+                //Tìm sản phẩm trong DB theo id
                 var sanPham = await _context.SanPham.FindAsync(id);
                 if (sanPham == null) return NotFound();
-
+                //Map data từ ViewModel -> EntityModel
                 sanPham.MaSanPham = viewModel.MaSanPham;
                 sanPham.TenSanPham = viewModel.TenSanPham;
                 sanPham.DonViTinh = viewModel.DonViTinh;
                 sanPham.PhanXuongId = viewModel.PhanXuongId;
-
+                //Lưu
                 _context.Update(sanPham);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SanPhamExists(viewModel.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                if (!SanPhamExists(viewModel.Id)) return NotFound();
+                else throw;
             }
             return RedirectToAction(nameof(Index));
         }
 
+        //Nạp lại danh sách phân xưởng nếu data invalid
         viewModel.PhanXuongList = await _context.PhanXuong
             .Select(px => new SelectListItem
             {

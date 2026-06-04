@@ -1,59 +1,88 @@
-@model IEnumerable<KeToanGiaThanhSanPham.Models.DinhMucKyThuat>
+@model KeToanGiaThanhSanPham.Models.ViewModels.DinhMucKyThuat.DinhMucIndexViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Định mức sản phẩm";
 }
 
-<h1>ĐỊNH MỨC KỸ THUẬT</h1>
+<div class="container mt-3">
+    <h2>Định mức kỹ thuật: <span style="color: blue;">@Model.TenSanPham (@Model.MaSanPham)</span></h2>
+    <div class="mb-3">
+        <a href="/SanPhams/Index" class="btn btn-secondary btn-sm">Quay lại danh sách sản phẩm</a>
+    </div>
+    <hr />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.SanPhamId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SanPham)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NguyenVatLieuId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NguyenVatLieu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SoLuongDinhMuc)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.SanPhamId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.SanPham)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.NguyenVatLieuId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.NguyenVatLieu)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.SoLuongDinhMuc)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Danh sách nguyên vật liệu cấu thành</h4>
+
+            @if (Model.DinhMucKyThuatList == null || !Model.DinhMucKyThuatList.Any())
+            {
+                <div class="alert alert-warning">Sản phẩm này chưa được thiết lập định mức.</div>
+            }
+            else
+            {
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Tên Nguyên Vật Liệu</th>
+                            <th>Đơn vị tính</th>
+                            <th>Số lượng định mức</th>
+                            <th style="width: 150px;" class="text-center">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DinhMucKyThuatList)
+                        {
+                            <tr>
+                                <td><strong>@item.TenNguyenVatLieu</strong></td>
+                                <td>@item.DonViTinh</td>
+                                <td>@item.SoLuongDinhMuc.ToString("N5")</td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-1">
+                                        <a href="/DinhMucKyThuats/Edit/@item.Id" class="btn btn-warning btn-sm">Sửa</a>
+
+                                        <form asp-action="Delete" asp-route-id="@item.Id" asp-route-sanPhamId="@Model.SanPhamId" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
+                                            <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+
+        <div class="col-md-4">
+            <h4>Thêm NVL mới</h4>
+            <div class="border p-3 bg-light rounded">
+                <form asp-action="Create" method="post">
+                    <input type="hidden" asp-for="NguyenVatLieuInput.SanPhamId" name="SanPhamId" />
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Nguyên vật liệu</label>
+                        <select asp-for="NguyenVatLieuInput.NguyenVatLieuId" name="NguyenVatLieuId" class="form-select" asp-items="Model.NguyenVatLieuInput.NguyenVatLieuList" required>
+                            <option value="">-- Chọn NVL --</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Số lượng định mức</label>
+                        <input asp-for="NguyenVatLieuInput.SoLuong" name="SoLuong" type="number" step="0.00001" class="form-control" placeholder="Ví dụ: 0.5" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Thêm vào định mức</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
