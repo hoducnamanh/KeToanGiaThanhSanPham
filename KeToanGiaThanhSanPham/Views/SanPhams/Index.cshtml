@@ -1,56 +1,89 @@
 @model IEnumerable<KeToanGiaThanhSanPham.Models.SanPham>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh mục sản phẩm";
 }
 
-<h1>DANH MỤC SẢN PHẨM</h1>
+<div class="container-fluid px-4 py-4">
+    <h1 class="mb-4">DANH MỤC SẢN PHẨM</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MaSanPham)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TenSanPham)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DonViTinh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhanXuongId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.MaSanPham)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.TenSanPham)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.DonViTinh)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.PhanXuong.TenPhanXuong)
-            </td>
-            <td>
-                <a asp-controller="DinhMucKyThuats"
-                asp-action="Index"
-                asp-route-sanPhamId="@item.Id">Định mức</a> |
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <form asp-action="Index" method="get" class="input-group">
+                <input type="text" name="searchString" class="form-control" 
+                       placeholder="Tìm kiếm mã, tên sản phẩm, đơn vị tính hoặc phân xưởng..." 
+                       value="@ViewData["CurrentFilter"]" />
+                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                <a asp-action="Index" class="btn btn-secondary">Xóa bộ lọc</a>
+            </form>
+        </div>
+        <div class="col-md-4 text-end">
+            <a asp-action="Create" class="btn btn-success">+ Thêm sản phẩm mới</a>
+        </div>
+    </div>
+
+    @if (Model.Count() > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["MaSanPhamSort"]" 
+                               asp-route-searchString="@ViewData["CurrentFilter"]">
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().MaSanPham)
+                                @if (ViewData["CurrentSort"]?.ToString() == "maSanPham_desc")
+                                {
+                                    <i class="bi bi-sort-down"></i>
+                                }
+                                else if (String.IsNullOrEmpty(ViewData["CurrentSort"]?.ToString()))
+                                {
+                                    <i class="bi bi-sort-up"></i>
+                                }
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["TenSanPhamSort"]" 
+                               asp-route-searchString="@ViewData["CurrentFilter"]">
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().TenSanPham)
+                                @if (ViewData["CurrentSort"]?.ToString() == "TenSanPham_desc")
+                                {
+                                    <i class="bi bi-sort-down"></i>
+                                }
+                                else if (ViewData["CurrentSort"]?.ToString() == "TenSanPham")
+                                {
+                                    <i class="bi bi-sort-up"></i>
+                                }
+                            </a>
+                        </th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().DonViTinh)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().PhanXuong)</th>
+                        <th style="width: 150px;">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.MaSanPham)</td>
+                            <td>@Html.DisplayFor(modelItem => item.TenSanPham)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DonViTinh)</td>
+                            <td>@Html.DisplayFor(modelItem => item.PhanXuong.TenPhanXuong)</td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Chi tiết</a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            Không tìm thấy sản phẩm phù hợp. <a asp-action="Index">Xóa bộ lọc</a>
+        </div>
+    }
+</div>

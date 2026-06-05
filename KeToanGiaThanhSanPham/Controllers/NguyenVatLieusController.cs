@@ -1,5 +1,4 @@
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KeToanGiaThanhSanPham.Models;
 using KeToanGiaThanhSanPham.Data;
@@ -14,9 +13,52 @@ public class NguyenVatLieusController : Controller
     }
 
     // GET: NGUYENVATLIEUS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index(string searchString, string sortOrder)    
     {
-        return View(await _context.NguyenVatLieu.ToListAsync());
+        // Các tùy chọn sắp xếp
+        ViewData["CurrentSort"] = sortOrder;
+        ViewData["MaNVLSort"] = String.IsNullOrEmpty(sortOrder) ? "maNVL_desc" : "";
+        ViewData["TenNVLSort"] = sortOrder == "TenNVL" ? "TenNVL_desc" : "TenNVL";
+        ViewData["DonGiaSort"] = sortOrder == "DonGia" ? "DonGia_desc" : "DonGia";
+        ViewData["CurrentFilter"] = searchString;
+
+        var nvlQuery = _context.NguyenVatLieu.AsQueryable();
+
+        // Tìm kiếm
+        if (!String.IsNullOrEmpty(searchString))
+        {
+            nvlQuery = nvlQuery.Where(nvl =>
+                nvl.MaNguyenVatLieu.Contains(searchString) ||
+                nvl.TenNguyenVatLieu.Contains(searchString) ||
+                nvl.DonViTinh.Contains(searchString)
+            );
+        }
+
+        // Sắp xếp
+        switch (sortOrder)
+        {
+            case "maNVL_desc":
+                nvlQuery = nvlQuery.OrderByDescending(n => n.MaNguyenVatLieu);
+                break;
+            case "TenNVL":
+                nvlQuery = nvlQuery.OrderBy(n => n.TenNguyenVatLieu);
+                break;
+            case "TenNVL_desc":
+                nvlQuery = nvlQuery.OrderByDescending(n => n.TenNguyenVatLieu);
+                break;
+            case "DonGia":
+                nvlQuery = nvlQuery.OrderBy(n => n.DonGia);
+                break;
+            case "DonGia_desc":
+                nvlQuery = nvlQuery.OrderByDescending(n => n.DonGia);
+                break;
+            default:
+                nvlQuery = nvlQuery.OrderBy(n => n.MaNguyenVatLieu);
+                break;
+        }
+
+        var nguyenVatLieus = await nvlQuery.ToListAsync();
+        return View(nguyenVatLieus);
     }
 
     // GET: NGUYENVATLIEUS/Details/5

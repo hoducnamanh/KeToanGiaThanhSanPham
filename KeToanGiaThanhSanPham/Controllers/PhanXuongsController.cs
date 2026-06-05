@@ -1,5 +1,4 @@
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KeToanGiaThanhSanPham.Models;
 using KeToanGiaThanhSanPham.Data;
@@ -14,9 +13,44 @@ public class PhanXuongsController : Controller
     }
 
     // GET: PHANXUONGS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index(string searchString, string sortOrder)    
     {
-        return View(await _context.PhanXuong.ToListAsync());
+        // Các tùy chọn sắp xếp
+        ViewData["CurrentSort"] = sortOrder;
+        ViewData["MaPXSort"] = String.IsNullOrEmpty(sortOrder) ? "maPX_desc" : "";
+        ViewData["TenPXSort"] = sortOrder == "TenPX" ? "TenPX_desc" : "TenPX";
+        ViewData["CurrentFilter"] = searchString;
+
+        var pxQuery = _context.PhanXuong.AsQueryable();
+
+        // Tìm kiếm
+        if (!String.IsNullOrEmpty(searchString))
+        {
+            pxQuery = pxQuery.Where(px =>
+                px.MaPhanXuong.Contains(searchString) ||
+                px.TenPhanXuong.Contains(searchString)
+            );
+        }
+
+        // Sắp xếp
+        switch (sortOrder)
+        {
+            case "maPX_desc":
+                pxQuery = pxQuery.OrderByDescending(p => p.MaPhanXuong);
+                break;
+            case "TenPX":
+                pxQuery = pxQuery.OrderBy(p => p.TenPhanXuong);
+                break;
+            case "TenPX_desc":
+                pxQuery = pxQuery.OrderByDescending(p => p.TenPhanXuong);
+                break;
+            default:
+                pxQuery = pxQuery.OrderBy(p => p.MaPhanXuong);
+                break;
+        }
+
+        var phanXuongs = await pxQuery.ToListAsync();
+        return View(phanXuongs);
     }
 
     // GET: PHANXUONGS/Details/5

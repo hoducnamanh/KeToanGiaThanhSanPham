@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KeToanGiaThanhSanPham.Models;
@@ -16,12 +15,47 @@ public class SanPhamsController : Controller
     }
 
     // GET: SANPHAMS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index(string searchString, string sortOrder)    
     {
-        var SanPham = await _context.SanPham
-            .Include(sp => sp.PhanXuong)
-            .ToListAsync();
+        // Các tùy chọn sắp xếp
+        ViewData["CurrentSort"] = sortOrder;
+        ViewData["MaSanPhamSort"] = String.IsNullOrEmpty(sortOrder) ? "maSanPham_desc" : "";
+        ViewData["TenSanPhamSort"] = sortOrder == "TenSanPham" ? "TenSanPham_desc" : "TenSanPham";
+        ViewData["CurrentFilter"] = searchString;
 
+        var sanPhamQuery = _context.SanPham
+            .Include(sp => sp.PhanXuong)
+            .AsQueryable();
+
+        // Tìm kiếm
+        if (!String.IsNullOrEmpty(searchString))
+        {
+            sanPhamQuery = sanPhamQuery.Where(sp =>
+                sp.MaSanPham.Contains(searchString) ||
+                sp.TenSanPham.Contains(searchString) ||
+                sp.DonViTinh.Contains(searchString) ||
+                sp.PhanXuong.TenPhanXuong.Contains(searchString)
+            );
+        }
+
+        // Sắp xếp
+        switch (sortOrder)
+        {
+            case "maSanPham_desc":
+                sanPhamQuery = sanPhamQuery.OrderByDescending(s => s.MaSanPham);
+                break;
+            case "TenSanPham":
+                sanPhamQuery = sanPhamQuery.OrderBy(s => s.TenSanPham);
+                break;
+            case "TenSanPham_desc":
+                sanPhamQuery = sanPhamQuery.OrderByDescending(s => s.TenSanPham);
+                break;
+            default:
+                sanPhamQuery = sanPhamQuery.OrderBy(s => s.MaSanPham);
+                break;
+        }
+
+        var SanPham = await sanPhamQuery.ToListAsync();
         return View(SanPham);
     }
 
