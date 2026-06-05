@@ -1,0 +1,189 @@
+﻿@model KeToanGiaThanhSanPham.Models.ViewModels.TinhGiaThanh.KetQuaGiaThanhViewModel
+@{
+    ViewData["Title"] = "Kết Quả Tính Giá Thành";
+}
+
+<div class="container-fluid px-4 py-4">
+    <div class="page-header mb-4">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3">
+                <div class="page-icon" style="background: linear-gradient(135deg,#3b82f6,#2563eb)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="page-title mb-0">Kết Quả Tính Giá Thành</h1>
+                    <p class="text-muted small mb-0">@Model.TenKy</p>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <button onclick="window.print()" class="btn-outline-modern">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                    In kết quả
+                </button>
+                <a asp-action="Index" class="btn-primary-modern">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-3.75"></path></svg>
+                    Tính lại
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stepper hoàn thành -->
+    <div class="gthanh-stepper mb-4">
+        <div class="gthanh-step done"><div class="step-circle">✓</div><span>Khai báo kỳ</span></div>
+        <div class="step-line done"></div>
+        <div class="gthanh-step done"><div class="step-circle">✓</div><span>Đánh giá WIP</span></div>
+        <div class="step-line done"></div>
+        <div class="gthanh-step done"><div class="step-circle">✓</div><span>Phân bổ chi phí</span></div>
+        <div class="step-line done"></div>
+        <div class="gthanh-step active done"><div class="step-circle">✓</div><span>Kết quả</span></div>
+    </div>
+
+    <!-- Thông tin tham số -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="summary-card">
+                <div class="summary-label">Kỳ tính giá thành</div>
+                <div class="summary-value text-primary">@Model.TenKy</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="summary-card">
+                <div class="summary-label">Phương pháp đánh giá WIP</div>
+                <div class="summary-value">@Model.TenPhuongPhapWIP</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="summary-card">
+                <div class="summary-label">Tổng chi phí SXC phân bổ</div>
+                <div class="summary-value text-danger">@Model.TongChiPhiSXC.ToString("N0") ₫</div>
+                <div class="text-muted small">Tiêu thức: @Model.TenTieuThuc</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bảng kết quả tổng hợp -->
+    <div class="card-modern mb-4">
+        <div class="card-modern-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="3" y1="15" x2="21" y2="15"></line>
+                <line x1="9" y1="3" x2="9" y2="21"></line>
+                <line x1="15" y1="3" x2="15" y2="21"></line>
+            </svg>
+            Bảng Tổng Hợp Giá Thành Sản Phẩm
+        </div>
+        <div class="card-modern-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-header-modern">
+                        <tr>
+                            <th rowspan="2" class="align-middle">Mã SP</th>
+                            <th rowspan="2" class="align-middle">Tên sản phẩm</th>
+                            <th rowspan="2" class="align-middle">Phân xưởng</th>
+                            <th colspan="2" class="text-center border-start">Sản lượng</th>
+                            <th colspan="3" class="text-center border-start">Chi phí</th>
+                            <th colspan="2" class="text-center border-start bg-success-subtle">Giá thành</th>
+                        </tr>
+                        <tr>
+                            <th class="border-start">HT (SP)</th>
+                            <th>Dở dang</th>
+                            <th class="border-start">CP NVL TT</th>
+                            <th>CP SXC PB</th>
+                            <th>Tổng CP</th>
+                            <th class="border-start bg-success-subtle">Tổng GT</th>
+                            <th class="bg-success-subtle">GT đơn vị</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var kq in Model.KetQuaDanhSach)
+                        {
+                            <tr>
+                                <td><span class="badge-code">@kq.MaSanPham</span></td>
+                                <td class="fw-medium">@kq.TenSanPham</td>
+                                <td><span class="text-muted small">@kq.TenPhanXuong</span></td>
+                                <td class="text-end">@kq.SoLuongHoanThanh.ToString("N0")</td>
+                                <td class="text-end">
+                                    @kq.SoLuongDoDangCuoiKy.ToString("N0")
+                                    @if (kq.SoLuongDoDangCuoiKy > 0)
+                                    {
+                                        <br />
+                                
+                                        <span class="text-muted x-small">(@kq.TyLeHoanThanhWIP%)</span>
+                                    }
+                                </td>
+                                <td class="text-end">@kq.ChiPhiNVLTrucTiep.ToString("N0") ₫</td>
+                                <td class="text-end">@kq.ChiPhiSXCPhanBo.ToString("N0") ₫</td>
+                                <td class="text-end fw-semibold">@kq.TongChiPhi.ToString("N0") ₫</td>
+                                <td class="text-end fw-bold text-success bg-success-subtle">@kq.TongGiaThanh.ToString("N0") ₫</td>
+                                <td class="text-end fw-bold text-primary bg-success-subtle">@kq.GiaThanhDonVi.ToString("N0") ₫</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-active fw-bold">
+                            <td colspan="5">Tổng cộng</td>
+                            <td class="text-end">@Model.KetQuaDanhSach.Sum(k => k.ChiPhiNVLTrucTiep).ToString("N0") ₫</td>
+                            <td class="text-end">@Model.KetQuaDanhSach.Sum(k => k.ChiPhiSXCPhanBo).ToString("N0") ₫</td>
+                            <td class="text-end">@Model.KetQuaDanhSach.Sum(k => k.TongChiPhi).ToString("N0") ₫</td>
+                            <td class="text-end bg-success-subtle">@Model.KetQuaDanhSach.Sum(k => k.TongGiaThanh).ToString("N0") ₫</td>
+                            <td class="bg-success-subtle"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chi tiết NVL từng sản phẩm -->
+    @foreach (var kq in Model.KetQuaDanhSach)
+    {
+        if (kq.ChiTietNVLList.Any())
+        {
+            <div class="card-modern mb-3">
+                <div class="card-modern-header" style="cursor:pointer" onclick="toggleDetail('@kq.SanPhamId')">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg>
+                    Chi tiết NVL — <strong>@kq.TenSanPham (@kq.MaSanPham)</strong>
+                    <span class="ms-auto text-muted small">Nhấn để xem/ẩn</span>
+                </div>
+                <div class="card-modern-body p-0 d-none" id="detail-@kq.SanPhamId">
+                    <table class="table table-sm mb-0">
+                        <thead class="table-header-modern">
+                            <tr>
+                                <th>Mã NVL</th>
+                                <th>Tên nguyên vật liệu</th>
+                                <th>SL định mức</th>
+                                <th>Đơn giá</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var nvl in kq.ChiTietNVLList)
+                            {
+                                <tr>
+                                    <td><span class="badge-code">@nvl.MaNVL</span></td>
+                                    <td>@nvl.TenNVL</td>
+                                    <td class="text-end">@nvl.SoLuongDinhMuc.ToString("N2")</td>
+                                    <td class="text-end">@nvl.DonGia.ToString("N0") ₫</td>
+                                    <td class="text-end fw-semibold">@nvl.ThanhTien.ToString("N0") ₫</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function toggleDetail(id) {
+            const panel = document.getElementById('detail-' + id);
+            panel.classList.toggle('d-none');
+        }
+    </script>
+}

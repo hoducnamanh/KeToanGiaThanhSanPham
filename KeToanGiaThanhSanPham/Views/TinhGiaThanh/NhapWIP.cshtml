@@ -1,0 +1,165 @@
+﻿@model KeToanGiaThanhSanPham.Models.ViewModels.TinhGiaThanh.WIPViewModel
+@{
+    ViewData["Title"] = "Đánh Giá Sản Phẩm Dở Dang";
+}
+
+<div class="container-fluid px-4 py-4">
+    <div class="page-header mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <div class="page-icon" style="background: linear-gradient(135deg,#f59e0b,#d97706)">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+            </div>
+            <div>
+                <h1 class="page-title mb-0">Đánh Giá Sản Phẩm Dở Dang (WIP)</h1>
+                <p class="text-muted small mb-0">Nhập số lượng và mức độ hoàn thành cuối kỳ</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stepper -->
+    <div class="gthanh-stepper mb-4">
+        <div class="gthanh-step done"><div class="step-circle">✓</div><span>Khai báo kỳ</span></div>
+        <div class="step-line done"></div>
+        <div class="gthanh-step active"><div class="step-circle">2</div><span>Đánh giá WIP</span></div>
+        <div class="step-line"></div>
+        <div class="gthanh-step"><div class="step-circle">3</div><span>Phân bổ chi phí</span></div>
+        <div class="step-line"></div>
+        <div class="gthanh-step"><div class="step-circle">4</div><span>Kết quả</span></div>
+    </div>
+
+    <form asp-action="NhapWIP" method="post">
+        @Html.AntiForgeryToken()
+
+        <!-- Hidden fields kỳ tính -->
+        <input type="hidden" name="KyTinh.LoaiKy" value="@((int)Model.KyTinh.LoaiKy)" />
+        <input type="hidden" name="KyTinh.Thang" value="@Model.KyTinh.Thang" />
+        <input type="hidden" name="KyTinh.Quy" value="@Model.KyTinh.Quy" />
+        <input type="hidden" name="KyTinh.Nam" value="@Model.KyTinh.Nam" />
+
+        <div class="card-modern mb-4">
+            <div class="card-modern-header">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"></path>
+                </svg>
+                Bước 2 — Phương pháp đánh giá sản phẩm dở dang
+            </div>
+            <div class="card-modern-body">
+                <div class="phuong-phap-selector">
+                    <label class="pp-option selected" id="ppLabel1">
+                        <input type="radio" name="PhuongPhap" value="1" checked onchange="togglePP(this)" />
+                        <div class="pp-content">
+                            <div class="pp-icon" style="background:#ede9fe;color:#7c3aed">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg>
+                            </div>
+                            <div>
+                                <div class="fw-semibold">Theo NVL chính</div>
+                                <div class="text-muted small">WIP được đánh giá theo chi phí NVL đã xuất đủ 100%</div>
+                            </div>
+                        </div>
+                    </label>
+                    <label class="pp-option" id="ppLabel2">
+                        <input type="radio" name="PhuongPhap" value="2" onchange="togglePP(this)" />
+                        <div class="pp-content">
+                            <div class="pp-icon" style="background:#fef3c7;color:#d97706">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                            </div>
+                            <div>
+                                <div class="fw-semibold">Theo tỷ lệ hoàn thành tương đương</div>
+                                <div class="text-muted small">WIP được quy đổi theo mức độ hoàn thành thực tế</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-modern">
+            <div class="card-modern-header">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
+                Số lượng sản phẩm dở dang cuối kỳ
+            </div>
+            <div class="card-modern-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-header-modern">
+                            <tr>
+                                <th>Mã SP</th>
+                                <th>Tên sản phẩm</th>
+                                <th>ĐVT</th>
+                                <th style="width:180px">SL dở dang cuối kỳ</th>
+                                <th style="width:200px" id="tyLeCol">Mức độ HT (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.DanhSachWIP.Count; i++)
+                            {
+                                <tr>
+                                    <td><span class="badge-code">@Model.DanhSachWIP[i].MaSanPham</span></td>
+                                    <td class="fw-medium">@Model.DanhSachWIP[i].TenSanPham</td>
+                                    <td>@Model.DanhSachWIP[i].DonViTinh</td>
+                                    <td>
+                                        <input type="hidden" name="DanhSachWIP[@i].SanPhamId" value="@Model.DanhSachWIP[i].SanPhamId" />
+                                        <input type="hidden" name="DanhSachWIP[@i].MaSanPham" value="@Model.DanhSachWIP[i].MaSanPham" />
+                                        <input type="hidden" name="DanhSachWIP[@i].TenSanPham" value="@Model.DanhSachWIP[i].TenSanPham" />
+                                        <input type="hidden" name="DanhSachWIP[@i].DonViTinh" value="@Model.DanhSachWIP[i].DonViTinh" />
+                                        <input type="number" class="form-control form-control-sm"
+                                               name="DanhSachWIP[@i].SoLuongDoDang"
+                                               value="@Model.DanhSachWIP[i].SoLuongDoDang"
+                                               min="0" step="0.01" />
+                                    </td>
+                                    <td class="ty-le-cell">
+                                        <div class="input-group input-group-sm">
+                                            <input type="number" class="form-control"
+                                                   name="DanhSachWIP[@i].TyLeHoanThanh"
+                                                   value="@Model.DanhSachWIP[i].TyLeHoanThanh"
+                                                   min="0" max="100" step="1" />
+                                            <span class="input-group-text">%</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-between">
+            <a asp-action="Index" class="btn-outline-modern">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                Quay lại
+            </a>
+            <button type="submit" class="btn-primary-modern">
+                Tiếp theo
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        function togglePP(radio) {
+            document.querySelectorAll('.pp-option').forEach(el => {
+                el.classList.toggle('selected', el.querySelector('input').checked);
+            });
+            const isTyLe = radio.value === '2';
+            document.querySelectorAll('.ty-le-cell input').forEach(el => {
+                el.disabled = !isTyLe;
+                el.closest('.ty-le-cell').style.opacity = isTyLe ? '1' : '0.4';
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const checked = document.querySelector('input[name="PhuongPhap"]:checked');
+            if (checked) togglePP(checked);
+        });
+    </script>
+}

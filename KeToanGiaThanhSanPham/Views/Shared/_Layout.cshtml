@@ -72,6 +72,62 @@
                                 </div>
                             </div>
                         </li>
+                        <li class="nav-dropdown-wrapper">
+                            <button class="nav-link-item nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                Chi phí
+                                <svg class="dropdown-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                            <div class="nav-dropdown-menu">
+                                <div class="nav-dropdown-inner">
+                                    <a class="nav-dropdown-item" asp-area="" asp-controller="ChiPhiNVL" asp-action="Index">
+                                        <div class="nav-dropdown-icon module-amber">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg>
+                                        </div>
+                                        <div class="nav-dropdown-text">
+                                            <span class="nav-dropdown-label">Chi phí NVL</span>
+                                            <span class="nav-dropdown-desc">Quản lý chi phí nguyên vật liệu</span>
+                                        </div>
+                                    </a>
+                                    <a class="nav-dropdown-item" asp-area="" asp-controller="ChiPhiNhanCong" asp-action="Index">
+                                        <div class="nav-dropdown-icon module-blue">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                                        </div>
+                                        <div class="nav-dropdown-text">
+                                            <span class="nav-dropdown-label">Chi phí nhân công</span>
+                                            <span class="nav-dropdown-desc">Theo dõi chi phí lao động trực tiếp</span>
+                                        </div>
+                                    </a>
+                                    <a class="nav-dropdown-item" asp-area="" asp-controller="ChiPhiSanXuatChung" asp-action="Index">
+                                        <div class="nav-dropdown-icon module-teal">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                        </div>
+                                        <div class="nav-dropdown-text">
+                                            <span class="nav-dropdown-label">Chi phí SX chung</span>
+                                            <span class="nav-dropdown-desc">Các chi phí quản lý phân xưởng</span>
+                                        </div>
+                                    </a>
+                                    <a class="nav-dropdown-item" asp-area="" asp-controller="QuanLyPheLieu" asp-action="Index">
+                                        <div class="nav-dropdown-icon" style="background-color: #fee2e2; color: #ef4444;">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                        </div>
+                                        <div class="nav-dropdown-text">
+                                            <span class="nav-dropdown-label">Quản lý phế liệu/SP hỏng</span>
+                                            <span class="nav-dropdown-desc">Theo dõi phế liệu và sản phẩm hỏng</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="nav-link-item" asp-area="" asp-controller="TinhGiaThanh" asp-action="Index">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                                Tính giá thành
+                            </a>
+                        </li>
                     </ul>
 
                     <div class="nav-right d-flex align-items-center gap-3">
@@ -98,6 +154,7 @@
                                 <li><a asp-area="" asp-controller="DinhMucKyThuats" asp-action="Index">Định mức kỹ thuật</a></li>
                             </ul>
                         </li>
+                        <li><a asp-area="" asp-controller="TinhGiaThanh" asp-action="Index">Tính giá thành</a></li>
                     </ul>
                 </div>
             </div>

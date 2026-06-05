@@ -843,3 +843,247 @@ a:hover { color: var(--navy-400); }
 .mobile-sub-links li a:hover::before {
     background: var(--amber-400);
 }
+/* ===== TÍNH GIÁ THÀNH — STEPPER ===== */
+.gthanh-stepper {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.gthanh-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #9ca3af;
+    min-width: 80px;
+}
+
+    .gthanh-step .step-circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        transition: all .2s;
+    }
+
+    .gthanh-step.active .step-circle {
+        background: linear-gradient(135deg,#6366f1,#8b5cf6);
+        color: #fff;
+        box-shadow: 0 4px 12px rgba(99,102,241,.35);
+    }
+
+    .gthanh-step.done .step-circle {
+        background: #10b981;
+        color: #fff;
+    }
+
+    .gthanh-step.active span, .gthanh-step.done span {
+        color: #374151;
+    }
+
+.step-line {
+    flex: 1;
+    height: 2px;
+    background: #e5e7eb;
+    margin-bottom: 16px;
+    transition: background .2s;
+}
+
+    .step-line.done {
+        background: #10b981;
+    }
+
+/* ===== KY TINH SELECTOR ===== */
+.ky-tinh-selector {
+    display: flex;
+    gap: 12px;
+}
+
+.ky-option {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all .15s;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+    .ky-option input {
+        display: none;
+    }
+
+    .ky-option:hover {
+        border-color: #a5b4fc;
+        background: #f5f3ff;
+    }
+
+    .ky-option.selected {
+        border-color: #6366f1;
+        background: #ede9fe;
+        color: #4f46e5;
+    }
+
+/* ===== PHUONG PHAP WIP ===== */
+.phuong-phap-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pp-option {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .15s;
+}
+
+    .pp-option input {
+        display: none;
+    }
+
+    .pp-option:hover {
+        border-color: #c4b5fd;
+    }
+
+    .pp-option.selected {
+        border-color: #7c3aed;
+        background: #faf5ff;
+    }
+
+.pp-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pp-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* ===== TIEU THUC PHAN BO ===== */
+.tieuthu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tieuthu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .15s;
+}
+
+    .tieuthu-item input {
+        display: none;
+    }
+
+    .tieuthu-item:hover {
+        border-color: #6ee7b7;
+    }
+
+    .tieuthu-item.selected {
+        border-color: #10b981;
+        background: #f0fdf4;
+    }
+
+.tieuthu-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* ===== SUMMARY CARDS ===== */
+.summary-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px 20px;
+}
+
+.summary-label {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 4px;
+}
+
+.summary-value {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* ===== BTN SUCCESS ===== */
+.btn-success-modern {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background: linear-gradient(135deg,#10b981,#059669);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+    text-decoration: none;
+}
+
+    .btn-success-modern:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(16,185,129,.3);
+        color: #fff;
+    }
+
+.btn-ghost-danger {
+    background: none;
+    border: none;
+    color: #ef4444;
+    padding: 2px 6px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background .1s;
+}
+
+    .btn-ghost-danger:hover {
+        background: #fee2e2;
+    }
+
+.x-small {
+    font-size: 10px;
+}
