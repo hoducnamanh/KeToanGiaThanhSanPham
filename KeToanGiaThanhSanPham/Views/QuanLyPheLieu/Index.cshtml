@@ -1,0 +1,252 @@
+﻿@model List<KeToanGiaThanhSanPham.Controllers.PheLieuSPHong>
+@{
+    ViewData["Title"] = "Quản lý phế liệu / Sản phẩm hỏng";
+    var tongThuHoi = Model.Sum(x => x.GiaTriThuHoi);
+    var tongDaXuLy = Model.Where(x => x.TrangThai == "Đã xử lý").Sum(x => x.GiaTriThuHoi);
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <div class="page-header-left">
+            <div class="page-icon" style="background:#fee2e2;color:#ef4444;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+            </div>
+            <div>
+                <h1 class="page-title">Quản lý phế liệu / SP hỏng</h1>
+                <p class="page-subtitle">Ghi nhận và xử lý giá trị phế liệu thu hồi để giảm trừ chi phí sản xuất</p>
+            </div>
+        </div>
+        <div class="page-header-actions">
+            <button class="btn-secondary" onclick="toggleModal('modalPL')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Ghi nhận mới
+            </button>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert-success">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            @TempData["Success"]
+        </div>
+    }
+
+    <!-- Thông tin giảm trừ chi phí -->
+    <div class="info-banner" style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <span style="font-size:13.5px;color:#b91c1c;">
+            <strong>Lưu ý kế toán:</strong> Giá trị phế liệu thu hồi sẽ được <strong>ghi giảm trực tiếp vào chi phí sản xuất</strong> tương ứng (Nợ TK 152/155 – Có TK 621/622/627).
+        </span>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#fee2e2;color:#ef4444;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Tổng phát sinh</span>
+                <span class="stat-value">@Model.Count mục</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#dcfce7;color:#16a34a;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Đã xử lý / giảm trừ</span>
+                <span class="stat-value">@tongDaXuLy.ToString("N0") đ</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#fef9c3;color:#ca8a04;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Chờ xử lý</span>
+                <span class="stat-value">@Model.Where(x => x.TrangThai == "Chưa xử lý").Sum(x => x.GiaTriThuHoi).ToString("N0") đ</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#ede9fe;color:#7c3aed;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Tổng giá trị thu hồi</span>
+                <span class="stat-value">@tongThuHoi.ToString("N0") đ</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <div class="table-card-header">
+            <h3>Danh sách phế liệu và sản phẩm hỏng</h3>
+            <input type="text" placeholder="Tìm kiếm..." class="search-input" onkeyup="filterTable(this,'plTable')" />
+        </div>
+        <form asp-action="XuLy" method="post">
+            <div class="table-responsive">
+                <table class="data-table" id="plTable">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" onchange="checkAll(this,'selectedIds')" /></th>
+                            <th>Ngày</th>
+                            <th>Loại</th>
+                            <th>Tên vật tư/SP</th>
+                            <th>SL</th>
+                            <th>ĐVT</th>
+                            <th>Giá thu hồi</th>
+                            <th>Giá trị thu hồi</th>
+                            <th>Lệnh SX</th>
+                            <th>Hướng xử lý</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pl in Model)
+                        {
+                            <tr>
+                                <td><input type="checkbox" name="selectedIds" value="@pl.Id" @(pl.TrangThai == "Đã xử lý" ? "disabled" : "") /></td>
+                                <td>@pl.NgayGhiNhan.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @if (pl.LoaiPhat == "Phế liệu")
+                                    {
+                                        <span class="badge-amber">♻ Phế liệu</span>
+                                    }
+                                    else
+                                    {
+
+                                        <span class="badge-red">✗ SP hỏng</span>
+                                    }
+                                </td>
+                                <td><strong>@pl.TenVatTu</strong></td>
+                                <td class="text-right">@pl.SoLuong</td>
+                                <td>@pl.DonVi</td>
+                                <td class="text-right">@pl.GiaThuHoi.ToString("N0")</td>
+                                <td class="text-right"><strong style="color:#16a34a;">@pl.GiaTriThuHoi.ToString("N0")</strong></td>
+                                <td><span class="badge-lsx">@pl.LenhSanXuat</span></td>
+                                <td>@pl.HuongXuLy</td>
+                                <td>
+                                    @if (pl.TrangThai == "Đã xử lý")
+                                    {
+                                        <span class="badge-success">✓ Đã xử lý</span>
+                                    }
+                                    else
+                                    {
+
+                                        <span class="badge-warning">⏳ Chưa xử lý</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-total">
+                            <td colspan="7"><strong>TỔNG GIÁ TRỊ THU HỒI (giảm trừ chi phí)</strong></td>
+                            <td class="text-right" style="color:#16a34a;"><strong>@tongThuHoi.ToString("N0") đ</strong></td>
+                            <td colspan="3"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="table-actions" style="display:flex;gap:10px;align-items:center;">
+                <select name="huongXuLy" class="form-control" style="max-width:200px;">
+                    <option value="Bán phế liệu">Bán phế liệu</option>
+                    <option value="Tái chế">Tái chế</option>
+                    <option value="Tiêu hủy">Tiêu hủy</option>
+                    <option value="Nhập lại kho">Nhập lại kho</option>
+                </select>
+                <button type="submit" class="btn-primary">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Xác nhận xử lý & giảm trừ chi phí
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal ghi nhận -->
+<div id="modalPL" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Ghi nhận phế liệu / SP hỏng</h3>
+            <button class="modal-close" onclick="toggleModal('modalPL')">✕</button>
+        </div>
+        <form asp-action="NhapMoi" method="post">
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Loại phát sinh</label>
+                        <select name="LoaiPhat" class="form-control">
+                            <option>Phế liệu</option>
+                            <option>SP hỏng</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày ghi nhận</label>
+                        <input type="date" name="NgayGhiNhan" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label>Tên vật tư / Sản phẩm</label>
+                        <input type="text" name="TenVatTu" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Số lượng</label>
+                        <input type="number" name="SoLuong" class="form-control" required min="0" step="0.01" />
+                    </div>
+                    <div class="form-group">
+                        <label>Đơn vị tính</label>
+                        <select name="DonVi" class="form-control">
+                            <option>kg</option>
+                            <option>cái</option>
+                            <option>lít</option>
+                            <option>m</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Giá thu hồi (đ/đvt)</label>
+                        <input type="number" name="GiaThuHoi" class="form-control" required min="0" />
+                    </div>
+                    <div class="form-group">
+                        <label>Hướng xử lý</label>
+                        <select name="HuongXuLy" class="form-control">
+                            <option>Bán phế liệu</option>
+                            <option>Tái chế</option>
+                            <option>Tiêu hủy</option>
+                            <option>Nhập lại kho</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Lệnh sản xuất</label>
+                        <input type="text" name="LenhSanXuat" class="form-control" placeholder="LSX-2025-00x" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="toggleModal('modalPL')">Hủy</button>
+                <button type="submit" class="btn-primary">Ghi nhận</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleModal(id) {
+            var m = document.getElementById(id);
+            m.style.display = m.style.display === 'none' ? 'flex' : 'none';
+        }
+        function checkAll(cb, name) {
+            document.querySelectorAll('input[name="'+name+'"]:not(:disabled)').forEach(function(c){ c.checked = cb.checked; });
+        }
+        function filterTable(input, tableId) {
+            var val = input.value.toLowerCase();
+            document.querySelectorAll('#'+tableId+' tbody tr').forEach(function(row){
+                row.style.display = row.textContent.toLowerCase().includes(val) ? '' : 'none';
+            });
+        }
+    </script>
+}

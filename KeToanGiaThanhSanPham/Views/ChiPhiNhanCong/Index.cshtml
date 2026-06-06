@@ -1,0 +1,218 @@
+﻿@model List<KeToanGiaThanhSanPham.Controllers.BangLuongCongNhan>
+@{
+    ViewData["Title"] = "Tập hợp chi phí nhân công";
+    var tongDaTH = Model.Where(x => x.TrangThai == "Đã tập hợp").Sum(x => x.TongLuong);
+    var tongChuaTH = Model.Where(x => x.TrangThai == "Chưa tập hợp").Sum(x => x.TongLuong);
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <div class="page-header-left">
+            <div class="page-icon module-blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            <div>
+                <h1 class="page-title">Tập hợp chi phí nhân công</h1>
+                <p class="page-subtitle">Kết nối bảng lương và tập hợp chi phí lao động trực tiếp sản xuất</p>
+            </div>
+        </div>
+        <div class="page-header-actions">
+            <button class="btn-secondary" onclick="toggleModal('modalNhapNC')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Nhập thủ công
+            </button>
+            <button class="btn-primary" onclick="alert('Đang kết nối module bảng lương...')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Kết nối bảng lương
+            </button>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert-success">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            @TempData["Success"]
+        </div>
+    }
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#dbeafe;color:#2563eb;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Tổng công nhân</span>
+                <span class="stat-value">@Model.Count</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#dcfce7;color:#16a34a;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Đã tập hợp</span>
+                <span class="stat-value">@tongDaTH.ToString("N0") đ</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#fef9c3;color:#ca8a04;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Chưa tập hợp</span>
+                <span class="stat-value">@tongChuaTH.ToString("N0") đ</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#ede9fe;color:#7c3aed;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-label">Tổng chi phí nhân công</span>
+                <span class="stat-value">@Model.Sum(x => x.TongLuong).ToString("N0") đ</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-card">
+        <div class="table-card-header">
+            <h3>Bảng lương công nhân trực tiếp sản xuất</h3>
+            <input type="text" placeholder="Tìm theo tên, mã NV..." class="search-input" onkeyup="filterTable(this,'ncTable')" />
+        </div>
+        <form asp-action="TapHop" method="post">
+            <div class="table-responsive">
+                <table class="data-table" id="ncTable">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" onchange="checkAll(this,'selectedIds')" /></th>
+                            <th>Mã NV</th>
+                            <th>Họ tên</th>
+                            <th>Tổ sản xuất</th>
+                            <th>Ngày công</th>
+                            <th>Lương/ngày</th>
+                            <th>Phụ cấp</th>
+                            <th>Tổng lương</th>
+                            <th>Lệnh SX</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var nv in Model)
+                        {
+                            <tr>
+                                <td><input type="checkbox" name="selectedIds" value="@nv.Id" @(nv.TrangThai == "Đã tập hợp" ? "disabled" : "") /></td>
+                                <td>@nv.MaNV</td>
+                                <td><strong>@nv.HoTen</strong></td>
+                                <td>@nv.ToSanXuat</td>
+                                <td class="text-right">@nv.SoNgayCong</td>
+                                <td class="text-right">@nv.LuongNgay.ToString("N0")</td>
+                                <td class="text-right">@nv.PhuCap.ToString("N0")</td>
+                                <td class="text-right"><strong>@nv.TongLuong.ToString("N0")</strong></td>
+                                <td><span class="badge-lsx">@nv.LenhSanXuat</span></td>
+                                <td>
+                                    @if (nv.TrangThai == "Đã tập hợp")
+                                    {
+                                        <span class="badge-success">✓ Đã tập hợp</span>
+                                    }
+                                    else
+                                    {
+
+                                        <span class="badge-warning">⏳ Chưa tập hợp</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-total">
+                            <td colspan="7"><strong>TỔNG CỘNG</strong></td>
+                            <td class="text-right"><strong>@Model.Sum(x => x.TongLuong).ToString("N0") đ</strong></td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="table-actions">
+                <button type="submit" class="btn-primary">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Tập hợp chi phí nhân công đã chọn
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal nhập thủ công -->
+<div id="modalNhapNC" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Nhập chi phí nhân công thủ công</h3>
+            <button class="modal-close" onclick="toggleModal('modalNhapNC')">✕</button>
+        </div>
+        <form asp-action="NhapMoi" method="post">
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Mã nhân viên</label>
+                        <input type="text" name="MaNV" class="form-control" required placeholder="VD: NV004" />
+                    </div>
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" name="HoTen" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Tổ sản xuất</label>
+                        <select name="ToSanXuat" class="form-control">
+                            <option>Tổ cơ khí</option>
+                            <option>Tổ lắp ráp</option>
+                            <option>Tổ hoàn thiện</option>
+                            <option>Tổ kiểm tra</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Số ngày công</label>
+                        <input type="number" name="SoNgayCong" class="form-control" required min="0" max="31" step="0.5" />
+                    </div>
+                    <div class="form-group">
+                        <label>Lương/ngày (đ)</label>
+                        <input type="number" name="LuongNgay" class="form-control" required min="0" />
+                    </div>
+                    <div class="form-group">
+                        <label>Phụ cấp (đ)</label>
+                        <input type="number" name="PhuCap" class="form-control" value="0" min="0" />
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label>Lệnh sản xuất</label>
+                        <input type="text" name="LenhSanXuat" class="form-control" placeholder="VD: LSX-2025-003" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="toggleModal('modalNhapNC')">Hủy</button>
+                <button type="submit" class="btn-primary">Lưu</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleModal(id) {
+            var m = document.getElementById(id);
+            m.style.display = m.style.display === 'none' ? 'flex' : 'none';
+        }
+        function checkAll(cb, name) {
+            document.querySelectorAll('input[name="'+name+'"]:not(:disabled)').forEach(function(c){ c.checked = cb.checked; });
+        }
+        function filterTable(input, tableId) {
+            var val = input.value.toLowerCase();
+            document.querySelectorAll('#'+tableId+' tbody tr').forEach(function(row){
+                row.style.display = row.textContent.toLowerCase().includes(val) ? '' : 'none';
+            });
+        }
+    </script>
+}
