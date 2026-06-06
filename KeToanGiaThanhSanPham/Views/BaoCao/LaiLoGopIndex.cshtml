@@ -1,0 +1,51 @@
+﻿@model KeToanGiaThanhSanPham.Models.ViewModels.BaoCao.GrossMarginViewModel
+
+@{
+    ViewData["Title"] = "Báo Cáo Lãi/Lỗ Gộp Theo Sản Phẩm";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p class="text-muted">Bảng tổng hợp doanh thu - giá thành và biên lợi nhuận gộp. (Doanh thu mẫu được tạo tự động; thay bằng dữ liệu bán hàng thực tế khi có.)</p>
+
+<table class="table table-sm table-striped">
+    <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Phân xưởng</th>
+            <th class="text-end">SL bán</th>
+            <th class="text-end">Đơn giá bán</th>
+            <th class="text-end">Doanh thu</th>
+            <th class="text-end">Giá thành /đv</th>
+            <th class="text-end">Giá thành tổng</th>
+            <th class="text-end">Lợi nhuận gộp</th>
+            <th class="text-end">Biên (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var it in Model.Items)
+        {
+            <tr>
+                <td>@it.MaSanPham - @it.TenSanPham</td>
+                <td>@it.TenPhanXuong</td>
+                <td class="text-end">@it.UnitsSold</td>
+                <td class="text-end">@it.UnitPrice.ToString("N0")</td>
+                <td class="text-end">@it.Revenue.ToString("N0")</td>
+                <td class="text-end">@it.CostPerUnit.ToString("N0")</td>
+                <td class="text-end">@it.CostTotal.ToString("N0")</td>
+                <td class="text-end">@it.GrossProfit.ToString("N0")</td>
+                <td class="text-end">@it.GrossMarginPercent.ToString("N2") %</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr class="table-secondary">
+            <th colspan="4">Tổng</th>
+            <th class="text-end">@Model.TotalRevenue.ToString("N0")</th>
+            <th></th>
+            <th class="text-end">@Model.TotalCost.ToString("N0")</th>
+            <th class="text-end">@Model.TotalGrossProfit.ToString("N0")</th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>

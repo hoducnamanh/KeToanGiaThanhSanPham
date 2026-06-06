@@ -1,0 +1,78 @@
+﻿@model KeToanGiaThanhSanPham.Models.ViewModels.BaoCao.VarianceAnalysisViewModel
+
+@{
+    ViewData["Title"] = "Báo Cáo Phân Tích Biến Động (Variance Analysis)";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p class="text-muted">So sánh Giá thành định mức và Giá thành thực tế để tìm nguyên nhân hao hụt, lãng phí. (Dữ liệu mẫu sử dụng phiếu xuất kho để lấy giá thực tế.)</p>
+
+<table class="table table-sm table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>SP</th>
+            <th>Phân xưởng</th>
+            <th class="text-end">Định mức (đ / đơn vị)</th>
+            <th class="text-end">Thực tế (đ / đơn vị)</th>
+            <th class="text-end">Chênh lệch (đ)</th>
+            <th class="text-end">Chênh lệch (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.Products)
+        {
+            <tr>
+                <td>@p.MaSanPham - @p.TenSanPham</td>
+                <td>@p.TenPhanXuong</td>
+                <td class="text-end">@p.StandardUnitCost.ToString("N0")</td>
+                <td class="text-end">@p.ActualUnitCost.ToString("N0")</td>
+                <td class="text-end">@p.VarianceAmount.ToString("N0")</td>
+                <td class="text-end">@p.VariancePercent.ToString("N2") %</td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <details>
+                        <summary>Chi tiết NVL</summary>
+                        <table class="table table-sm mt-2">
+                            <thead>
+                                <tr>
+                                    <th>NVL</th>
+                                    <th class="text-end">SL định mức</th>
+                                    <th class="text-end">ĐG định mức</th>
+                                    <th class="text-end">CP định mức</th>
+                                    <th class="text-end">ĐG thực tế</th>
+                                    <th class="text-end">CP thực tế</th>
+                                    <th class="text-end">Chênh lệch</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var n in p.NVLDetails)
+                                {
+                                    <tr>
+                                        <td>@n.TenNVL</td>
+                                        <td class="text-end">@n.StandardQtyPerUnit</td>
+                                        <td class="text-end">@n.StandardUnitPrice.ToString("N0")</td>
+                                        <td class="text-end">@n.StandardCost.ToString("N0")</td>
+                                        <td class="text-end">@n.ActualUnitPrice.ToString("N0")</td>
+                                        <td class="text-end">@n.ActualCost.ToString("N0")</td>
+                                        <td class="text-end">@n.VarianceCost.ToString("N0")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </details>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr class="table-secondary">
+            <th colspan="2">Tổng</th>
+            <th class="text-end">@Model.TotalStandard.ToString("N0")</th>
+            <th class="text-end">@Model.TotalActual.ToString("N0")</th>
+            <th class="text-end">@Model.TotalVariance.ToString("N0")</th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
