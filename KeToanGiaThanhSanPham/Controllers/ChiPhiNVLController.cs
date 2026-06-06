@@ -2,11 +2,21 @@
 using KeToanGiaThanhSanPham.Models;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
+using KeToanGiaThanhSanPham.Services;
 
 namespace KeToanGiaThanhSanPham.Controllers
 {
+    [Authorize(Roles = "DataEntry,ChiefAccountant,Director")]
     public class ChiPhiNVLController : Controller
     {
+        private readonly IAccountingPeriodService _accountingPeriodService;
+
+        public ChiPhiNVLController(IAccountingPeriodService accountingPeriodService)
+        {
+            _accountingPeriodService = accountingPeriodService;
+        }
+
         // Exposed as public static so reports can read sample data
         public static List<PhieuXuatKhoNVL> DanhSachPhieu { get; } = new List<PhieuXuatKhoNVL>
         {
@@ -29,6 +39,14 @@ namespace KeToanGiaThanhSanPham.Controllers
         [HttpPost]
         public IActionResult TapHop(List<int> selectedIds, string lenhSanXuat)
         {
+            // Check locked period
+            var now = DateTime.Now;
+            if (_accountingPeriodService.IsPeriodClosed(now.Year, now.Month))
+            {
+                TempData["Error"] = "Kỳ kế toán đã chốt. Không thể thay đổi dữ liệu cho tháng này.";
+                return RedirectToAction("Index");
+            }
+
             if (selectedIds != null)
             {
                 foreach (var id in selectedIds)
@@ -44,6 +62,13 @@ namespace KeToanGiaThanhSanPham.Controllers
         [HttpPost]
         public IActionResult NhapMoi(PhieuXuatKhoNVL model)
         {
+            var now = DateTime.Now;
+            if (_accountingPeriodService.IsPeriodClosed(now.Year, now.Month))
+            {
+                TempData["Error"] = "Kỳ kế toán đã chốt. Không thể thêm dữ liệu cho tháng này.";
+                return RedirectToAction("Index");
+            }
+
             model.Id = DanhSachPhieu.Count + 1;
             model.ThanhTien = model.SoLuong * model.DonGia;
             model.TrangThai = "Chưa tập hợp";
