@@ -2,172 +2,318 @@
     ViewData["Title"] = "Trang chủ";
 }
 
-<!-- Hero Section -->
-<section class="hero-section">
-    <div class="hero-bg-grid"></div>
-    <div class="container hero-content">
+<div class="container-fluid px-4 py-4">
+    <div class="rounded shadow-sm p-4 p-md-5 mb-4 text-white" style="background-color: #0f172a !important;">
         <div class="row align-items-center">
-            <div class="col-lg-7">
-                <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    Hệ thống quản lý kế toán
-                </div>
-                <h1 class="hero-title">Kế Toán<br><span class="accent-text">Giá Thành</span><br>Sản Phẩm</h1>
-                <p class="hero-subtitle">Giải pháp quản lý chi phí sản xuất, tính giá thành sản phẩm và kiểm soát nguyên vật liệu toàn diện cho doanh nghiệp.</p>
-                <div class="hero-actions">
-                    <a asp-controller="SanPhams" asp-action="Index" class="btn-hero-primary">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                        Vào hệ thống
+            <div class="col-lg-8">
+                <small class="text-uppercase fw-bold text-white-50 tracking-wider mb-2 d-block" style="font-size: 0.75rem; letter-spacing: 0.15em;">
+                    Nhóm 18 · Kế toán giá thành sản phẩm
+                </small>
+                <h1 class="display-5 fw-bold text-uppercase mb-3" style="letter-spacing: -0.01em;">
+                    Kế toán <br class="d-none d-md-inline" /> giá thành sản phẩm
+                </h1>
+                <p class="lead my-3 text-white-50" style="font-size: 0.95rem; max-width: 600px; line-height: 1.6;">
+                    Phần mềm quản lý và tính toán giá thành sản phẩm, tập hợp chi phí sản xuất, phân bổ và báo cáo tự động theo kỳ kế toán.
+                </p>
+                <div class="d-inline-flex gap-2 mt-3 flex-wrap">
+                    <a asp-controller="TinhGiaThanh" asp-action="Index" class="btn btn-light text-uppercase fw-bold px-4 py-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">
+                        Tính giá thành
                     </a>
-                    <a asp-controller="SanPhams" asp-action="Create" class="btn-hero-secondary">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        Thêm mới
+                    <a asp-controller="SanPhams" asp-action="Index" class="btn btn-outline-light text-uppercase fw-bold px-4 py-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">
+                        Danh mục sản phẩm
                     </a>
                 </div>
             </div>
-            <div class="col-lg-5 d-none d-lg-block">
-                <div class="hero-graphic">
-                    <div class="stat-card stat-card-1">
-                        <div class="stat-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-                        </div>
-                        <div>
-                            <div class="stat-label">Sản phẩm</div>
-                            <div class="stat-value">Quản lý</div>
-                        </div>
-                    </div>
-                    <div class="stat-card stat-card-2">
-                        <div class="stat-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                        </div>
-                        <div>
-                            <div class="stat-label">Nguyên vật liệu</div>
-                            <div class="stat-value">Theo dõi</div>
-                        </div>
-                    </div>
-                    <div class="stat-card stat-card-3">
-                        <div class="stat-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                        </div>
-                        <div>
-                            <div class="stat-label">Phân xưởng</div>
-                            <div class="stat-value">Kiểm soát</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-</section>
 
-<!-- Stats Bar -->
-<section class="stats-bar">
-    <div class="container">
-        <div class="row g-0">
-            <div class="col-6 col-md-3">
-                <div class="stat-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path></svg>
-                    <div>
-                        <div class="stat-item-label">Sản phẩm</div>
-                        <div class="stat-item-desc">Quản lý danh mục</div>
-                    </div>
+    <div class="card shadow-sm border-0 mb-4 bg-light">
+        <div class="card-body p-0">
+            <div class="row g-0 text-center">
+                <div class="col-6 col-md-3 col-lg-2 border-end border-bottom p-3">
+                    <a asp-controller="SanPhams" asp-action="Index" class="text-decoration-none d-block">
+                        <small class="text-uppercase text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.05em;">Danh mục</small>
+                        <span class="fw-bold text-dark text-uppercase d-block style-title" style="font-size: 0.8rem;">Sản phẩm</span>
+                    </a>
                 </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    <div>
-                        <div class="stat-item-label">Định mức KT</div>
-                        <div class="stat-item-desc">Kỹ thuật sản xuất</div>
-                    </div>
+                <div class="col-6 col-md-3 col-lg-2 border-end border-bottom p-3">
+                    <a asp-controller="NguyenVatLieus" asp-action="Index" class="text-decoration-none d-block">
+                        <small class="text-uppercase text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.05em;">Danh mục</small>
+                        <span class="fw-bold text-dark text-uppercase d-block style-title" style="font-size: 0.8rem;">Nguyên liệu</span>
+                    </a>
                 </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                    <div>
-                        <div class="stat-item-label">Phân xưởng</div>
-                        <div class="stat-item-desc">Quản lý khu vực</div>
-                    </div>
+                <div class="col-6 col-md-3 col-lg-2 border-end border-bottom p-3">
+                    <a asp-controller="PhanXuongs" asp-action="Index" class="text-decoration-none d-block">
+                        <small class="text-uppercase text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.05em;">Danh mục</small>
+                        <span class="fw-bold text-dark text-uppercase d-block style-title" style="font-size: 0.8rem;">Phân xưởng</span>
+                    </a>
                 </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg>
-                    <div>
-                        <div class="stat-item-label">Nguyên vật liệu</div>
-                        <div class="stat-item-desc">Kiểm soát tồn kho</div>
-                    </div>
+                <div class="col-6 col-md-3 col-lg-2 border-end border-bottom p-3">
+                    <a asp-controller="ChiPhiNVL" asp-action="Index" class="text-decoration-none d-block">
+                        <small class="text-uppercase text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.05em;">Chi phí</small>
+                        <span class="fw-bold text-dark text-uppercase d-block style-title" style="font-size: 0.8rem;">CP Nguyên liệu</span>
+                    </a>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 border-end border-bottom p-3">
+                    <a asp-controller="ChiPhiNhanCong" asp-action="Index" class="text-decoration-none d-block">
+                        <small class="text-uppercase text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.05em;">Chi phí</small>
+                        <span class="fw-bold text-dark text-uppercase d-block style-title" style="font-size: 0.8rem;">CP Nhân công</span>
+                    </a>
+                </div>
+                <div class="col-6 col-md-3 col-lg-2 border-bottom p-3">
+                    <a asp-controller="BaoCao" asp-action="TongHopChiPhiIndex" class="text-decoration-none d-block">
+                        <small class="text-uppercase text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.05em;">Báo cáo</small>
+                        <span class="fw-bold text-dark text-uppercase d-block style-title" style="font-size: 0.8rem;">Tổng hợp CP</span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-</section>
 
-<!-- Quick Access Cards -->
-<section class="quick-access py-5">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Truy cập nhanh</h2>
-            <p class="section-desc">Chọn chức năng để bắt đầu quản lý</p>
+    <div class="row g-4">
+
+        <div class="col-12 col-xl-8">
+
+            <div class="d-flex align-items-center border-bottom pb-2 mb-3">
+                <div class="bg-dark rounded-circle me-2" style="width: 6px; height: 6px;"></div>
+                <h2 class="h6 text-uppercase fw-bold mb-0 text-dark" style="letter-spacing: 0.05em;">Các module quản lý chính</h2>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-12 col-md-6">
+                    <a asp-controller="SanPhams" asp-action="Index" class="card h-100 text-decoration-none border shadow-sm bg-white hover-shadow transition">
+                        <div class="card-body p-3">
+                            <span class="badge bg-light text-muted text-uppercase mb-2" style="font-size: 0.65rem;">Danh mục</span>
+                            <h3 class="h6 text-uppercase fw-bold text-dark mb-2">Sản phẩm</h3>
+                            <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.45;">Quản lý danh mục sản phẩm, cấu hình định mức kỹ thuật nguyên vật liệu theo từng sản phẩm.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6">
+                    <a asp-controller="NguyenVatLieus" asp-action="Index" class="card h-100 text-decoration-none border shadow-sm bg-white hover-shadow transition">
+                        <div class="card-body p-3">
+                            <span class="badge bg-light text-muted text-uppercase mb-2" style="font-size: 0.65rem;">Danh mục</span>
+                            <h3 class="h6 text-uppercase fw-bold text-dark mb-2">Nguyên vật liệu</h3>
+                            <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.45;">Theo dõi mã, tên, đơn vị tính và cập nhật đơn giá của từng loại nguyên vật liệu đầu vào.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6">
+                    <a asp-controller="PhanXuongs" asp-action="Index" class="card h-100 text-decoration-none border shadow-sm bg-white hover-shadow transition">
+                        <div class="card-body p-3">
+                            <span class="badge bg-light text-muted text-uppercase mb-2" style="font-size: 0.65rem;">Danh mục</span>
+                            <h3 class="h6 text-uppercase fw-bold text-dark mb-2">Phân xưởng</h3>
+                            <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.45;">Quản lý tập hợp các phân xưởng sản xuất, gán luồng sản xuất cho từng dòng hàng.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6">
+                    <a asp-controller="ChiPhiNVL" asp-action="Index" class="card h-100 text-decoration-none border shadow-sm bg-white hover-shadow transition">
+                        <div class="card-body p-3">
+                            <span class="badge bg-light text-muted text-uppercase mb-2" style="font-size: 0.65rem;">Chi phí</span>
+                            <h3 class="h6 text-uppercase fw-bold text-dark mb-2">Chi phí NVL</h3>
+                            <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.45;">Nhập dữ liệu phiếu xuất kho vật tư, tập hợp chi phí vật liệu trực tiếp phát sinh.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6">
+                    <a asp-controller="ChiPhiNhanCong" asp-action="Index" class="card h-100 text-decoration-none border shadow-sm bg-white hover-shadow transition">
+                        <div class="card-body p-3">
+                            <span class="badge bg-light text-muted text-uppercase mb-2" style="font-size: 0.65rem;">Chi phí</span>
+                            <h3 class="h6 text-uppercase fw-bold text-dark mb-2">Chi phí nhân công</h3>
+                            <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.45;">Ghi nhận bảng chấm công lương, tập hợp chi phí lao động trực tiếp sản xuất.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6">
+                    <a asp-controller="ChiPhiSanXuatChung" asp-action="Index" class="card h-100 text-decoration-none border shadow-sm bg-white hover-shadow transition">
+                        <div class="card-body p-3">
+                            <span class="badge bg-light text-muted text-uppercase mb-2" style="font-size: 0.65rem;">Chi phí</span>
+                            <h3 class="h6 text-uppercase fw-bold text-dark mb-2">Chi phí SX chung</h3>
+                            <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.45;">Theo dõi chi phí quản lý phân xưởng, điện nước, khấu hao công cụ dụng cụ.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6">
+                    <a asp-controller="TinhGiaThanh" asp-action="Index" class="card h-100 text-decoration-none text-white border-0 shadow-sm transition" style="background-color: #0f172a !important;">
+                        <div class="card-body p-3">
+                            <span class="badge bg-secondary text-uppercase mb-2" style="font-size: 0.65rem;">N nghiệp vụ chính</span>
+                            <h3 class="h6 text-uppercase fw-bold text-white mb-2">Tính giá thành</h3>
+                            <p class="text-white-50 mb-0" style="font-size: 0.8rem; line-height: 1.45;">Xử lý quy trình tính giá: Khai báo kỳ → chốt dở dang WIP → phân bổ SXC → kết xuất.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6">
+                    <a asp-controller="BaoCao" asp-action="BangTinhGiaThanhIndex" class="card h-100 text-decoration-none border shadow-sm bg-white hover-shadow transition">
+                        <div class="card-body p-3">
+                            <span class="badge bg-light text-muted text-uppercase mb-2" style="font-size: 0.65rem;">Báo cáo</span>
+                            <h3 class="h6 text-uppercase fw-bold text-dark mb-2">Báo cáo & Phân tích</h3>
+                            <p class="text-secondary mb-0" style="font-size: 0.8rem; line-height: 1.45;">Kết xuất bảng giá thành, đối chiếu định mức thực tế, đo lường biến động lãi lỗ.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center border-bottom pb-2 mb-3 mt-4">
+                <div class="bg-dark rounded-circle me-2" style="width: 6px; height: 6px;"></div>
+                <h2 class="h6 text-uppercase fw-bold mb-0 text-dark" style="letter-spacing: 0.05em;">Quy trình thực hiện nghiệp vụ</h2>
+            </div>
+
+            <div class="alert alert-warning border-0 p-3 mb-3 shadow-sm d-flex align-items-start" role="alert">
+                <span class="badge bg-dark text-uppercase me-2 mt-0.5" style="font-size: 0.6rem; letter-spacing: 0.05em;">Lưu ý</span>
+                <p class="mb-0 text-dark fw-medium" style="font-size: 0.8rem; line-height: 1.4;">
+                    Hệ thống yêu cầu hoàn thành việc thiết lập danh mục nền và chứng từ chi phí trước khi thực hiện bước tính toán giá thành.
+                </p>
+            </div>
+
+            <div class="card shadow-sm border-0 bg-white mb-4">
+                <div class="list-group list-group-flush" style="font-size: 0.82rem;">
+                    <div class="list-group-item p-3 d-flex align-items-start gap-3">
+                        <span class="badge rounded-0 p-2 font-monospace text-white" style="background-color: #0f172a; font-size: 0.75rem; width: 32px;">01</span>
+                        <div>
+                            <strong class="text-uppercase text-dark d-block mb-0.5" style="font-size: 0.8rem;">Thiết lập phân xưởng</strong>
+                            <span class="text-secondary">Vào <em class="fw-medium text-dark">Danh mục → Phân xưởng</em>, khởi tạo sơ đồ quản lý phân xưởng chế tạo trong nhà máy.</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item p-3 d-flex align-items-start gap-3">
+                        <span class="badge rounded-0 p-2 font-monospace text-white" style="background-color: #0f172a; font-size: 0.75rem; width: 32px;">02</span>
+                        <div>
+                            <strong class="text-uppercase text-dark d-block mb-0.5" style="font-size: 0.8rem;">Nhập kho nguyên vật liệu</strong>
+                            <span class="text-secondary">Vào <em class="fw-medium text-dark">Danh mục → Nguyên vật liệu</em> để gán danh mục vật tư cùng đơn giá cơ sở.</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item p-3 d-flex align-items-start gap-3">
+                        <span class="badge rounded-0 p-2 font-monospace text-white" style="background-color: #0f172a; font-size: 0.75rem; width: 32px;">03</span>
+                        <div>
+                            <strong class="text-uppercase text-dark d-block mb-0.5" style="font-size: 0.8rem;">Sản phẩm & Định mức kỹ thuật</strong>
+                            <span class="text-secondary">Tạo danh mục sản phẩm, bấm <em class="fw-medium text-dark">Định mức</em> để cấu hình lượng tiêu hao vật tư tiêu chuẩn.</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item p-3 d-flex align-items-start gap-3">
+                        <span class="badge rounded-0 p-2 font-monospace text-white" style="background-color: #0f172a; font-size: 0.75rem; width: 32px;">04</span>
+                        <div>
+                            <strong class="text-uppercase text-dark d-block mb-0.5" style="font-size: 0.8rem;">Phát sinh chi phí trong kỳ</strong>
+                            <span class="text-secondary">Cập nhật số liệu thực tế tại các phân hệ tập hợp chi phí Nguyên liệu, Nhân công và Sản xuất chung.</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item p-3 d-flex align-items-start gap-3">
+                        <span class="badge rounded-0 p-2 font-monospace text-white" style="background-color: #0f172a; font-size: 0.75rem; width: 32px;">05</span>
+                        <div>
+                            <strong class="text-uppercase text-dark d-block mb-0.5" style="font-size: 0.8rem;">Vận hành tính giá thành</strong>
+                            <span class="text-secondary">Khai báo khối lượng dở dang (WIP), áp dụng tiêu thức phân bổ để kết xuất giá thành đơn vị.</span>
+                        </div>
+                    </div>
+                    <div class="list-group-item p-3 d-flex align-items-start gap-3">
+                        <span class="badge rounded-0 p-2 font-monospace text-white" style="background-color: #0f172a; font-size: 0.75rem; width: 32px;">06</span>
+                        <div>
+                            <strong class="text-uppercase text-dark d-block mb-0.5" style="font-size: 0.8rem;">Kiểm tra báo cáo</strong>
+                            <span class="text-secondary">Truy xuất hệ thống báo cáo tổng hợp để phân tích biến động chi phí phát sinh thực tế.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row g-4">
-            <div class="col-md-6 col-xl-3">
-                <a asp-controller="SanPhams" asp-action="Index" class="module-card">
-                    <div class="module-icon-wrap module-blue">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-                    </div>
-                    <div class="module-info">
-                        <h3>Sản phẩm</h3>
-                        <p>Quản lý danh mục và giá thành sản phẩm sản xuất</p>
-                    </div>
-                    <div class="module-arrow">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
+
+        <div class="col-12 col-xl-4">
+
+            <div class="d-flex align-items-center border-bottom pb-2 mb-3">
+                <div class="bg-dark rounded-circle me-2" style="width: 6px; height: 6px;"></div>
+                <h2 class="h6 text-uppercase fw-bold mb-0 text-dark" style="letter-spacing: 0.05em;">Thành viên thực hiện</h2>
             </div>
-            <div class="col-md-6 col-xl-3">
-                <a asp-controller="NguyenVatLieus" asp-action="Index" class="module-card">
-                    <div class="module-icon-wrap module-amber">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+
+            <div class="card shadow-sm border-0 mb-4 bg-white">
+                <div class="card-header text-white text-uppercase fw-bold py-2.5 px-3" style="background-color: #0f172a; font-size: 0.7rem; letter-spacing: 0.05em;">
+                    Nhóm 04 — Kế toán giá thành
+                </div>
+                <div class="card-body p-0">
+                    <div class="p-3 border-bottom">
+                        <span class="fw-bold text-dark d-block text-uppercase" style="font-size: 0.85rem;">Hồ Đức Nam Anh</span>
+                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle text-uppercase my-1" style="font-size: 0.6rem; font-weight: 600;">Trưởng nhóm</span>
+                        <ul class="text-secondary ps-3 mb-0 mt-2" style="font-size: 0.78rem; line-height: 1.5;">
+                            <li>Thiết kế kiến trúc tổng thể (MVC, EF Core, Identity)</li>
+                            <li>Module tính giá thành (3 bước, WIP, phân bổ SXC)</li>
+                            <li>Thuật toán phân bổ chi phí (NVL, giờ công, SL SX)</li>
+                            <li>Hệ thống phân quyền 3 vai (DataEntry, ChiefAccountant, Director)</li>
+                            <li>Audit log tự động & kỳ kế toán (AccountingPeriod)</li>
+                            <li>Báo cáo biến động (Variance Analysis)</li>
+                        </ul>
                     </div>
-                    <div class="module-info">
-                        <h3>Nguyên vật liệu</h3>
-                        <p>Theo dõi và kiểm soát nguyên vật liệu đầu vào</p>
+                    <div class="p-3">
+                        <span class="fw-bold text-dark d-block text-uppercase" style="font-size: 0.85rem;">Phạm Đức Anh</span>
+                        <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle text-uppercase my-1" style="font-size: 0.6rem; font-weight: 600;">Thành viên</span>
+                        <ul class="text-secondary ps-3 mb-0 mt-2" style="font-size: 0.78rem; line-height: 1.5;">
+                            <li>CRUD Sản phẩm, Nguyên vật liệu, Phân xưởng</li>
+                            <li>Module Định mức kỹ thuật (gán NVL / SP)</li>
+                            <li>Chi phí NVL (phiếu xuất kho, tập hợp)</li>
+                            <li>Chi phí Nhân công & bảng lương công nhân</li>
+                            <li>Chi phí SX chung & Quản lý phế liệu/SP hỏng</li>
+                            <li>Báo cáo tổng hợp chi phí & lãi/lỗ gộp</li>
+                        </ul>
                     </div>
-                    <div class="module-arrow">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
+                </div>
             </div>
-            <div class="col-md-6 col-xl-3">
-                <a asp-controller="PhanXuongs" asp-action="Index" class="module-card">
-                    <div class="module-icon-wrap module-teal">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                    </div>
-                    <div class="module-info">
-                        <h3>Phân xưởng</h3>
-                        <p>Quản lý các khu vực và phân xưởng sản xuất</p>
-                    </div>
-                    <div class="module-arrow">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
+
+            <div class="d-flex align-items-center border-bottom pb-2 mb-3">
+                <div class="bg-dark rounded-circle me-2" style="width: 6px; height: 6px;"></div>
+                <h2 class="h6 text-uppercase fw-bold mb-0 text-dark" style="letter-spacing: 0.05em;">Thông tin công nghệ</h2>
             </div>
-            <div class="col-md-6 col-xl-3">
-                <a asp-controller="DinhMucKyThuats" asp-action="Index" class="module-card">
-                    <div class="module-icon-wrap module-violet">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                    </div>
-                    <div class="module-info">
-                        <h3>Định mức kỹ thuật</h3>
-                        <p>Thiết lập và quản lý định mức tiêu hao NVL</p>
-                    </div>
-                    <div class="module-arrow">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
+
+            <div class="card shadow-sm border-0 p-3 bg-light mb-3">
+                <small class="text-uppercase fw-bold text-muted border-bottom pb-1.5 mb-2 d-block" style="font-size: 0.62rem; letter-spacing: 0.05em;">Tech stack cốt lõi</small>
+                <div class="d-flex justify-content-between border-bottom border-dotted py-1.5" style="font-size: 0.8rem;">
+                    <span class="text-secondary">Framework</span>
+                    <strong class="text-dark font-monospace" style="font-size: 0.75rem;">.NET 10 / MVC</strong>
+                </div>
+                <div class="d-flex justify-content-between border-bottom border-dotted py-1.5" style="font-size: 0.8rem;">
+                    <span class="text-secondary">Bộ xác thực</span>
+                    <strong class="text-dark font-monospace" style="font-size: 0.75rem;">IDENTITY</strong>
+                </div>
+                <div class="d-flex justify-content-between border-bottom border-dotted py-1.5" style="font-size: 0.8rem;">
+                    <span class="text-secondary">ORM Engine</span>
+                    <strong class="text-dark font-monospace" style="font-size: 0.75rem;">EF CORE 10</strong>
+                </div>
+                <div class="d-flex justify-content-between border-bottom border-dotted py-1.5" style="font-size: 0.8rem;">
+                    <span class="text-secondary">Cơ sở dữ liệu</span>
+                    <strong class="text-dark font-monospace" style="font-size: 0.75rem;">SQL SERVER</strong>
+                </div>
+                <div class="d-flex justify-content-between py-1.5" style="font-size: 0.8rem;">
+                    <span class="text-secondary">Giao diện (UI)</span>
+                    <strong class="text-dark font-monospace" style="font-size: 0.75rem;">BOOTSTRAP 5</strong>
+                </div>
             </div>
+
+            <div class="card shadow-sm border-0 p-3 bg-light">
+                <small class="text-uppercase fw-bold text-muted border-bottom pb-1.5 mb-2 d-block" style="font-size: 0.62rem; letter-spacing: 0.05em;">Phân quyền hệ thống</small>
+                <div class="d-flex justify-content-between border-bottom border-dotted py-1.5" style="font-size: 0.8rem;">
+                    <span class="text-secondary">DataEntry</span>
+                    <strong class="text-primary" style="font-size: 0.75rem;">NHẬP LIỆU</strong>
+                </div>
+                <div class="d-flex justify-content-between border-bottom border-dotted py-1.5" style="font-size: 0.8rem;">
+                    <span class="text-secondary">ChiefAccountant</span>
+                    <strong class="text-success" style="font-size: 0.75rem;">KẾ TOÁN TRƯỞNG</strong>
+                </div>
+                <div class="d-flex justify-content-between py-1.5" style="font-size: 0.8rem;">
+                    <span class="text-secondary">Director</span>
+                    <strong class="text-danger" style="font-size: 0.75rem;">GIÁM ĐỐC</strong>
+                </div>
+            </div>
+
         </div>
     </div>
-</section>
+</div>
+
+<style>
+    /* Bổ sung một số hiệu ứng hover mượt mà không phá vỡ reset của Bootstrap */
+    .hover-shadow {
+        transition: box-shadow 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    }
+
+        .hover-shadow:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.08) !important;
+            background-color: #f8f9fa !important;
+        }
+
+    .border-dotted {
+        border-style: none none dotted none !important;
+    }
+</style>
