@@ -1,0 +1,34 @@
+﻿@model List<KeToanGiaThanhSanPham.Models.SanPham>
+
+@{
+    ViewData["Title"] = "Bảng Tính Giá Thành";
+}
+
+<div class="page-header">
+    <h1>@ViewData["Title"]</h1>
+    <p class="text-muted">Chọn sản phẩm để xem chi tiết cấu thành giá</p>
+</div>
+
+<div class="row">
+    @if (Model != null && Model.Count > 0)
+    {
+        foreach (var sp in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@sp.TenSanPham</h5>
+                        <p class="card-text"><small class="text-muted">Mã: @sp.MaSanPham</small></p>
+                        <a asp-action="BangTinhGiaThanhChiTiet" asp-route-sanPhamId="@sp.Id" class="btn btn-primary btn-sm w-100">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <div class="alert alert-info">Không có sản phẩm.</div>
+        </div>
+    }
+</div>

@@ -238,4 +238,9 @@ public class SanPhamsController : Controller
     {
         return _context.SanPham.Any(e => e.Id == id);
     }
+
+    public static implicit operator SanPhamsController(SanPham v)
+    {
+        throw new NotImplementedException();
+    }
 }
