@@ -9,11 +9,11 @@ namespace KeToanGiaThanhSanPham.Controllers
         // Exposed as public static so reports can read sample data
         public static List<ChiPhiSXChung> DanhSach { get; } = new List<ChiPhiSXChung>
         {
-            new ChiPhiSXChung { Id=1, LoaiChiPhi="Khấu hao máy móc", MoTa="Khấu hao dây chuyền đúc", SoTien=15000000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Đã ghi nhận" },
-            new ChiPhiSXChung { Id=2, LoaiChiPhi="Điện sản xuất", MoTa="Tiền điện tháng 6/2025", SoTien=8500000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Chưa ghi nhận" },
-            new ChiPhiSXChung { Id=3, LoaiChiPhi="Nước sản xuất", MoTa="Tiền nước tháng 6/2025", SoTien=1200000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Chưa ghi nhận" },
-            new ChiPhiSXChung { Id=4, LoaiChiPhi="Thuê xưởng", MoTa="Thuê mặt bằng phân xưởng A", SoTien=20000000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Đã ghi nhận" },
-            new ChiPhiSXChung { Id=5, LoaiChiPhi="Lương quản lý PX", MoTa="Lương quản đốc và tổ trưởng", SoTien=12000000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Chưa ghi nhận" },
+            new ChiPhiSXChung { Id=1, LoaiChiPhi="Khấu hao máy móc", MoTa="Khấu hao dây chuyền đúc", SoTien=15000000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Đã ghi nhận", PhanXuong="Phân xưởng A" },
+            new ChiPhiSXChung { Id=2, LoaiChiPhi="Điện sản xuất", MoTa="Tiền điện tháng 6/2025", SoTien=8500000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Chưa ghi nhận", PhanXuong="Phân xưởng B" },
+            new ChiPhiSXChung { Id=3, LoaiChiPhi="Nước sản xuất", MoTa="Tiền nước tháng 6/2025", SoTien=1200000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Chưa ghi nhận", PhanXuong="Phân xưởng B" },
+            new ChiPhiSXChung { Id=4, LoaiChiPhi="Thuê xưởng", MoTa="Thuê mặt bằng phân xưởng A", SoTien=20000000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Đã ghi nhận", PhanXuong="Phân xưởng A" },
+            new ChiPhiSXChung { Id=5, LoaiChiPhi="Lương quản lý PX", MoTa="Lương quản đốc và tổ trưởng", SoTien=12000000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Chưa ghi nhận", PhanXuong="Phân xưởng C" },
         };
 
         public IActionResult Index()
@@ -39,6 +39,7 @@ namespace KeToanGiaThanhSanPham.Controllers
         {
             model.Id = DanhSach.Count + 1;
             model.TrangThai = "Chưa ghi nhận";
+            if (string.IsNullOrWhiteSpace(model.PhanXuong)) model.PhanXuong = "Không xác định";
             DanhSach.Add(model);
             TempData["Success"] = "Đã thêm khoản chi phí SX chung mới!";
             return RedirectToAction("Index");
@@ -54,5 +55,8 @@ namespace KeToanGiaThanhSanPham.Controllers
         public DateTime TuNgay { get; set; }
         public DateTime DenNgay { get; set; }
         public string TrangThai { get; set; }
+
+        // New: cho biết chi phí thuộc phân xưởng nào (để báo cáo)
+        public string PhanXuong { get; set; }
     }
 }
