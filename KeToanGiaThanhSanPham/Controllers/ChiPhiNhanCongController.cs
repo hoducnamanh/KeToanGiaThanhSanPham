@@ -7,7 +7,8 @@ namespace KeToanGiaThanhSanPham.Controllers
 {
     public class ChiPhiNhanCongController : Controller
     {
-        private static List<BangLuongCongNhan> _bangLuong = new List<BangLuongCongNhan>
+        // Exposed as public static so reports can read sample data
+        public static List<BangLuongCongNhan> BangLuong { get; } = new List<BangLuongCongNhan>
         {
             new BangLuongCongNhan { Id=1, MaNV="NV001", HoTen="Nguyễn Văn An", ToSanXuat="Tổ cơ khí", SoNgayCong=26, LuongNgay=350000, PhuCap=500000, TongLuong=9600000, LenhSanXuat="LSX-2025-001", TrangThai="Đã tập hợp" },
             new BangLuongCongNhan { Id=2, MaNV="NV002", HoTen="Trần Thị Bình", ToSanXuat="Tổ lắp ráp", SoNgayCong=24, LuongNgay=320000, PhuCap=400000, TongLuong=8080000, LenhSanXuat="LSX-2025-001", TrangThai="Chưa tập hợp" },
@@ -16,7 +17,7 @@ namespace KeToanGiaThanhSanPham.Controllers
 
         public IActionResult Index()
         {
-            return View(_bangLuong);
+            return View(BangLuong);
         }
 
         [HttpPost]
@@ -25,7 +26,7 @@ namespace KeToanGiaThanhSanPham.Controllers
             if (selectedIds != null)
                 foreach (var id in selectedIds)
                 {
-                    var item = _bangLuong.Find(x => x.Id == id);
+                    var item = BangLuong.Find(x => x.Id == id);
                     if (item != null) item.TrangThai = "Đã tập hợp";
                 }
             TempData["Success"] = $"Đã tập hợp chi phí nhân công cho {selectedIds?.Count ?? 0} công nhân!";
@@ -35,10 +36,10 @@ namespace KeToanGiaThanhSanPham.Controllers
         [HttpPost]
         public IActionResult NhapMoi(BangLuongCongNhan model)
         {
-            model.Id = _bangLuong.Count + 1;
+            model.Id = BangLuong.Count + 1;
             model.TongLuong = model.SoNgayCong * model.LuongNgay + model.PhuCap;
             model.TrangThai = "Chưa tập hợp";
-            _bangLuong.Add(model);
+            BangLuong.Add(model);
             TempData["Success"] = "Đã thêm dữ liệu công nhân mới!";
             return RedirectToAction("Index");
         }

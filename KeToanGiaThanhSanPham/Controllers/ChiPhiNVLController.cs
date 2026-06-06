@@ -7,8 +7,8 @@ namespace KeToanGiaThanhSanPham.Controllers
 {
     public class ChiPhiNVLController : Controller
     {
-        // Dữ liệu mẫu (thay bằng DbContext thực tế)
-        private static List<PhieuXuatKhoNVL> _danhSachPhieu = new List<PhieuXuatKhoNVL>
+        // Exposed as public static so reports can read sample data
+        public static List<PhieuXuatKhoNVL> DanhSachPhieu { get; } = new List<PhieuXuatKhoNVL>
         {
             new PhieuXuatKhoNVL { Id = 1, SoPhieu = "PX001", NgayXuat = new DateTime(2025,6,1), TenNVL = "Thép tấm", DonVi = "kg", SoLuong = 500, DonGia = 25000, ThanhTien = 12500000, LenhSanXuat = "LSX-2025-001", TrangThai = "Đã tập hợp" },
             new PhieuXuatKhoNVL { Id = 2, SoPhieu = "PX002", NgayXuat = new DateTime(2025,6,2), TenNVL = "Nhựa PP", DonVi = "kg", SoLuong = 200, DonGia = 35000, ThanhTien = 7000000, LenhSanXuat = "LSX-2025-001", TrangThai = "Chưa tập hợp" },
@@ -19,7 +19,7 @@ namespace KeToanGiaThanhSanPham.Controllers
         {
             var model = new ChiPhiNVLViewModel
             {
-                DanhSachPhieu = _danhSachPhieu,
+                DanhSachPhieu = DanhSachPhieu,
                 TongChiPhi = 0,
                 ThangNam = DateTime.Now.ToString("MM/yyyy")
             };
@@ -33,7 +33,7 @@ namespace KeToanGiaThanhSanPham.Controllers
             {
                 foreach (var id in selectedIds)
                 {
-                    var phieu = _danhSachPhieu.Find(p => p.Id == id);
+                    var phieu = DanhSachPhieu.Find(p => p.Id == id);
                     if (phieu != null) phieu.TrangThai = "Đã tập hợp";
                 }
             }
@@ -44,10 +44,10 @@ namespace KeToanGiaThanhSanPham.Controllers
         [HttpPost]
         public IActionResult NhapMoi(PhieuXuatKhoNVL model)
         {
-            model.Id = _danhSachPhieu.Count + 1;
+            model.Id = DanhSachPhieu.Count + 1;
             model.ThanhTien = model.SoLuong * model.DonGia;
             model.TrangThai = "Chưa tập hợp";
-            _danhSachPhieu.Add(model);
+            DanhSachPhieu.Add(model);
             TempData["Success"] = "Đã thêm phiếu xuất kho mới!";
             return RedirectToAction("Index");
         }

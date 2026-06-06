@@ -6,7 +6,8 @@ namespace KeToanGiaThanhSanPham.Controllers
 {
     public class ChiPhiSanXuatChungController : Controller
     {
-        private static List<ChiPhiSXChung> _danhSach = new List<ChiPhiSXChung>
+        // Exposed as public static so reports can read sample data
+        public static List<ChiPhiSXChung> DanhSach { get; } = new List<ChiPhiSXChung>
         {
             new ChiPhiSXChung { Id=1, LoaiChiPhi="Khấu hao máy móc", MoTa="Khấu hao dây chuyền đúc", SoTien=15000000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Đã ghi nhận" },
             new ChiPhiSXChung { Id=2, LoaiChiPhi="Điện sản xuất", MoTa="Tiền điện tháng 6/2025", SoTien=8500000, TuNgay=new DateTime(2025,6,1), DenNgay=new DateTime(2025,6,30), TrangThai="Chưa ghi nhận" },
@@ -17,7 +18,7 @@ namespace KeToanGiaThanhSanPham.Controllers
 
         public IActionResult Index()
         {
-            return View(_danhSach);
+            return View(DanhSach);
         }
 
         [HttpPost]
@@ -26,7 +27,7 @@ namespace KeToanGiaThanhSanPham.Controllers
             if (selectedIds != null)
                 foreach (var id in selectedIds)
                 {
-                    var item = _danhSach.Find(x => x.Id == id);
+                    var item = DanhSach.Find(x => x.Id == id);
                     if (item != null) item.TrangThai = "Đã ghi nhận";
                 }
             TempData["Success"] = $"Đã ghi nhận {selectedIds?.Count ?? 0} khoản chi phí sản xuất chung!";
@@ -36,9 +37,9 @@ namespace KeToanGiaThanhSanPham.Controllers
         [HttpPost]
         public IActionResult NhapMoi(ChiPhiSXChung model)
         {
-            model.Id = _danhSach.Count + 1;
+            model.Id = DanhSach.Count + 1;
             model.TrangThai = "Chưa ghi nhận";
-            _danhSach.Add(model);
+            DanhSach.Add(model);
             TempData["Success"] = "Đã thêm khoản chi phí SX chung mới!";
             return RedirectToAction("Index");
         }

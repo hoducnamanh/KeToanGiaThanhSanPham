@@ -1,0 +1,36 @@
+﻿@model KeToanGiaThanhSanPham.Models.ViewModels.BaoCao.BangTinhGiaThanhViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết giá thành";
+}
+
+<h2>Chi tiết giá thành — @Model.SanPham?.TenSanPham</h2>
+
+<table class="table">
+    <tr>
+        <td>Chi phí Nguyên vật liệu</td>
+        <td class="text-end">@Model.ChiPhiNVL:C</td>
+    </tr>
+    <tr>
+        <td>Chi phí Nhân công</td>
+        <td class="text-end">@Model.ChiPhiNhanCong:C</td>
+    </tr>
+    <tr>
+        <td>Chi phí Sản xuất chung</td>
+        <td class="text-end">@Model.ChiPhiSXC:C</td>
+    </tr>
+    <tr class="table-success">
+        <td><strong>Tổng giá thành sản xuất</strong></td>
+        <td class="text-end"><strong>@Model.TongGiaThanhSanXuat:C</strong></td>
+    </tr>
+    <tr>
+        <td>So lượng sản xuất (đang mặc định)</td>
+        <td class="text-end">@Model.SoLuongSanXuat</td>
+    </tr>
+    <tr>
+        <td>Giá thành đơn vị</td>
+        <td class="text-end"><strong>@Model.GiaThanhDonVi:C</strong></td>
+    </tr>
+</table>
+
+<a asp-action="BangTinhGiaThanhIndex" class="btn btn-outline-secondary">Quay lại</a>
