@@ -1511,3 +1511,144 @@ a:hover { color: var(--navy-400); }
         padding: 16px;
     }
 }
+/* ========================================================
+   CUSTOM CSS CHO TRANG LOGIN IDENTITY MẶC ĐỊNH
+   ======================================================== */
+
+/* 1. Đổi màu nền của toàn trang thành xám nhạt để làm nổi bật form (chỉ áp dụng khi có form #account) */
+body:has(#account) {
+    background-color: #f4f6f9;
+}
+
+/* 2. Căn giữa tiêu đề "Log in" */
+h1:has(+ .row #account) {
+    text-align: center;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* 3. Căn giữa khu vực chứa form đăng nhập */
+.row:has(#account) {
+    display: flex;
+    justify-content: center;
+}
+
+    /* Giới hạn độ rộng của form đăng nhập để không bị quá to */
+    .row:has(#account) .col-md-4 {
+        width: 100%;
+        max-width: 450px;
+        flex: 0 0 auto;
+    }
+
+    /* 4. Ẩn cột "Use another service to log in" rác ở bên phải (vì bạn chưa cấu hình) */
+    .row:has(#account) > div:not(:has(#account)) {
+        display: none;
+    }
+
+/* 5. Style cho khung (Card) chứa form đăng nhập */
+#account {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+    #account h2 {
+        font-size: 1.2rem;
+        color: #6c757d;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+    }
+
+    /* Ẩn đường gạch ngang mặc định cho sạch sẽ */
+    #account hr {
+        display: none;
+    }
+
+    /* 6. Style các ô nhập liệu (Input) */
+    #account .form-floating .form-control {
+        border-radius: 10px;
+        border: 1.5px solid #e2e8f0;
+        padding-left: 15px;
+        transition: all 0.2s ease-in-out;
+    }
+
+        /* Hiệu ứng khi click vào ô nhập liệu (Focus) */
+        #account .form-floating .form-control:focus {
+            border-color: #6f42c1; /* Màu tím đồng bộ với theme của bạn */
+            box-shadow: 0 0 0 4px rgba(111, 66, 193, 0.15);
+        }
+
+    /* 7. Căn chỉnh ô checkbox Remember me */
+    #account .checkbox {
+        margin-top: 15px;
+        margin-bottom: 25px;
+    }
+
+        #account .checkbox label {
+            font-weight: 500;
+            color: #495057;
+            cursor: pointer;
+        }
+
+    #account .form-check-input:checked {
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+    }
+
+    /* 8. Nút Log in (Màu tím, bo tròn, hiệu ứng hover) */
+    #account button[type="submit"] {
+        width: 100%;
+        background: linear-gradient(135deg, #6f42c1, #59339d);
+        border: none;
+        border-radius: 10px;
+        padding: 14px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        margin-bottom: 25px;
+    }
+
+        #account button[type="submit"]:hover {
+            background: linear-gradient(135deg, #59339d, #462880);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(111, 66, 193, 0.35);
+        }
+
+    /* 9. Khu vực các link hỗ trợ (Quên MK, Đăng ký mới...) */
+    #account div p {
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    #account a {
+        color: #6f42c1;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+
+        #account a:hover {
+            color: #462880;
+            text-decoration: underline;
+        }
+/* ========================================================
+   ẨN NAVBAR KHI Ở TRANG ĐĂNG NHẬP
+   ======================================================== */
+/* Nếu body có chứa form #account (trang login), ẩn nav hoặc class .navbar */
+body:has(#account) nav,
+body:has(#account) .navbar {
+    display: none !important;
+}
+
+/* Đẩy form sát lên trên một chút cho cân đối sau khi ẩn navbar */
+body:has(#account) h1:has(+ .row #account) {
+    margin-top: 5rem;
+}
