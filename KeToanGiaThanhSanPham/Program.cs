@@ -35,6 +35,24 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => {
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+// Tự động chạy Migration khi khởi tạo App
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>(); // Thay bằng tên DbContext của bạn
+        if (context.Database.GetPendingMigrations().Any())
+        {
+            context.Database.Migrate();
+        }
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database.");
+    }
+}
 
 // 3. Khởi tạo dữ liệu (Seed Roles & Admin Account)
 using (var scope = app.Services.CreateScope())
