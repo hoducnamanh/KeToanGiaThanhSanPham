@@ -1,12 +1,12 @@
 @model KeToanGiaThanhSanPham.Models.PhanXuong
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Thêm phân xưởng";
 }
 
-<h1>Create</h1>
+<h1>Thêm</h1>
 
-<h4>PhanXuong</h4>
+<h4>Phân xưởng</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,12 +23,6 @@
                 <label asp-for="TenPhanXuong" class="control-label"></label>
                 <input asp-for="TenPhanXuong" class="form-control" />
                 <span asp-validation-for="TenPhanXuong" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="SanPhamCollection" class="control-label"></label>
-                <input asp-for="SanPhamCollection" class="form-control" />
-                <span asp-validation-for="SanPhamCollection" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
