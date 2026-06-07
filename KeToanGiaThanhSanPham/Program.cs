@@ -1,12 +1,14 @@
-﻿using KeToanGiaThanhSanPham.Data;
+using KeToanGiaThanhSanPham.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using KeToanGiaThanhSanPham.Services;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+    throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -15,20 +17,33 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IAccountingPeriodService, AccountingPeriodService>();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+// 1. Cấu hình Identity: Nới lỏng chính sách mật khẩu để cho phép đặt "admin123"
+builder.Services.AddDefaultIdentity<IdentityUser>(options => {
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+})
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// 2. Bắt buộc đăng nhập toàn cục (Bất cứ URL nào cũng tự động chuyển hướng về trang Đăng nhập)
+
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Seed roles and an initial admin user (synchronous calls)
+// 3. Khởi tạo dữ liệu (Seed Roles & Admin Account)
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
     var userMgr = services.GetRequiredService<UserManager<IdentityUser>>();
 
+    // Khởi tạo các nhóm quyền
     string[] roles = new[] { "DataEntry", "ChiefAccountant", "Director" };
     foreach (var role in roles)
     {
@@ -36,8 +51,11 @@ using (var scope = app.Services.CreateScope())
             roleMgr.CreateAsync(new IdentityRole(role)).GetAwaiter().GetResult();
     }
 
-    var adminEmail = builder.Configuration["Seed:AdminEmail"] ?? "admin@local";
-    var adminPassword = builder.Configuration["Seed:AdminPassword"] ?? "Admin123!";
+    // Khởi tạo tài khoản admin mặc định
+    // Sử dụng admin@ketoan.vn để tương thích với field <input type="email"> mặc định của Identity UI
+    var adminEmail = "admin@ketoan.vn";
+    var adminPassword = "admin123";
+
     var adminUser = userMgr.FindByEmailAsync(adminEmail).GetAwaiter().GetResult();
     if (adminUser == null)
     {
@@ -67,32 +85,14 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapStaticAssets();
+// 4. Bỏ qua xác thực cho các tệp tĩnh (CSS, JS, hình ảnh) để màn hình đăng nhập không bị vỡ giao diện
+app.MapStaticAssets().AllowAnonymous();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-app.MapRazorPages()
-   .WithStaticAssets();
+app.MapRazorPages().WithStaticAssets();
 
 app.Run();
-
-// The following code should be inside a controller/action, not at the top level
-/*
-int year = DateTime.Now.Year; // or obtain from form (Thang/Nam)
-int month = DateTime.Now.Month;
-if (_accountingPeriodService.IsPeriodClosed(year, month))
-{
-    TempData["Error"] = "Kỳ kế toán đã chốt. Không thể thay đổi dữ liệu cho tháng này.";
-    return RedirectToAction("Index");
-}
-
-[Authorize(Roles = "DataEntry,ChiefAccountant,Director")]
-public class ChiPhiNVLController : Controller { ... }
-
-[Authorize(Roles = "ChiefAccountant,Director")]
-[HttpPost]
-public IActionResult Approve(int id) { ... }
-*/
