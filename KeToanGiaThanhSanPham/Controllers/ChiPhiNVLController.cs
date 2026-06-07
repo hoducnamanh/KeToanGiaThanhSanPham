@@ -10,6 +10,7 @@ namespace KeToanGiaThanhSanPham.Controllers
     [Authorize(Roles = "DataEntry,ChiefAccountant,Director")]
     public class ChiPhiNVLController : Controller
     {
+
         private readonly IAccountingPeriodService _accountingPeriodService;
 
         public ChiPhiNVLController(IAccountingPeriodService accountingPeriodService)
@@ -24,7 +25,7 @@ namespace KeToanGiaThanhSanPham.Controllers
             new PhieuXuatKhoNVL { Id = 2, SoPhieu = "PX002", NgayXuat = new DateTime(2025,6,2), TenNVL = "Nhựa PP", DonVi = "kg", SoLuong = 200, DonGia = 35000, ThanhTien = 7000000, LenhSanXuat = "LSX-2025-001", TrangThai = "Chưa tập hợp" },
             new PhieuXuatKhoNVL { Id = 3, SoPhieu = "PX003", NgayXuat = new DateTime(2025,6,3), TenNVL = "Sơn phủ", DonVi = "lít", SoLuong = 50, DonGia = 120000, ThanhTien = 6000000, LenhSanXuat = "LSX-2025-002", TrangThai = "Chưa tập hợp" },
         };
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var model = new ChiPhiNVLViewModel
