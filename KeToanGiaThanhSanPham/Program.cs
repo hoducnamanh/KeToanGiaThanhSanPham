@@ -39,6 +39,7 @@ var app = builder.Build();
 // 3. Khởi tạo dữ liệu (Seed Roles & Admin Account)
 using (var scope = app.Services.CreateScope())
 {
+
     var services = scope.ServiceProvider;
     var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
     var userMgr = services.GetRequiredService<UserManager<IdentityUser>>();
